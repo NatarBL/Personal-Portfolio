@@ -278,167 +278,169 @@
         <h2 class="mb-4">Try my recreation of my favorite game!</h2>
         <hr class="divider" />
       </div>
-      <div style="display: inline-block; position: relative">
-        <div
-          id="overlappingDiv"
-          style="
-            background-color: black;
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 10;
-          "
-        ></div>
-        <!-- HTML battle elements -->
-        <div id="battleDisplay" style="display: none">
-          <!--Enemy healthbar-->
+      <div class="container px-4 px-lg-5">
+        <div style="display: inline-block; position: relative">
           <div
+            id="overlappingDiv"
             style="
-              background-color: white;
-              width: 300px;
+              background-color: black;
               position: absolute;
-              top: 50px;
-              left: 150px;
-              border: 4px rgb(44, 44, 44) solid;
-              padding: 8px;
-            "
-          >
-            <h1 style="margin: 0; font-family: 'Arial'; font-size: 20px">
-              Torchic
-            </h1>
-            <div style="position: relative">
-              <div
-                style="
-                  height: 6px;
-                  background-color: rgb(175, 175, 175);
-                  margin-top: 5px;
-                "
-              ></div>
-              <div
-                style="
-                  height: 6px;
-                  background-color: green;
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  width: 100%;
-                "
-                id="enemyHealthBar"
-              ></div>
-            </div>
-          </div>
-          <!--Player healthbar-->
-          <div
-            style="
-              background-color: white;
-              width: 300px;
-              position: absolute;
-              top: 250px;
-              left: 425px;
-              border: 4px rgb(44, 44, 44) solid;
-              padding: 8px;
-            "
-          >
-            <h1 style="margin: 0; font-family: 'Arial'; font-size: 20px">
-              Torchic
-            </h1>
-            <div style="position: relative">
-              <div
-                style="
-                  height: 6px;
-                  background-color: rgb(175, 175, 175);
-                  margin-top: 5px;
-                "
-              ></div>
-              <div
-                style="
-                  height: 6px;
-                  background-color: green;
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  width: 100%;
-                "
-                id="playerHealthBar"
-              ></div>
-            </div>
-          </div>
-          <!--Battle dialog-->
-          <div
-            style="
-              background-color: white;
-              height: 200px;
-              position: absolute;
+              top: 0;
+              right: 0;
               bottom: 0;
               left: 0;
-              right: 0;
-              border-top: 8px rgb(44, 44, 44) solid;
-              display: flex;
+              opacity: 0;
+              pointer-events: none;
+              z-index: 10;
             "
-            id="battle-dialog"
-          >
-            <!-- Text Dialog-->
+          ></div>
+          <!-- HTML battle elements -->
+          <div id="battleDisplay" style="display: none">
+            <!--Enemy healthbar-->
             <div
               style="
                 background-color: white;
+                width: 300px;
                 position: absolute;
-                top: 0;
+                top: 50px;
+                left: 150px;
+                border: 4px rgb(44, 44, 44) solid;
+                padding: 8px;
+              "
+            >
+              <h1 style="margin: 0; font-family: 'Arial'; font-size: 20px">
+                Torchic
+              </h1>
+              <div style="position: relative">
+                <div
+                  style="
+                    height: 6px;
+                    background-color: rgb(175, 175, 175);
+                    margin-top: 5px;
+                  "
+                ></div>
+                <div
+                  style="
+                    height: 6px;
+                    background-color: green;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                  "
+                  id="enemyHealthBar"
+                ></div>
+              </div>
+            </div>
+            <!--Player healthbar-->
+            <div
+              style="
+                background-color: white;
+                width: 300px;
+                position: absolute;
+                top: 250px;
+                left: 425px;
+                border: 4px rgb(44, 44, 44) solid;
+                padding: 8px;
+              "
+            >
+              <h1 style="margin: 0; font-family: 'Arial'; font-size: 20px">
+                Torchic
+              </h1>
+              <div style="position: relative">
+                <div
+                  style="
+                    height: 6px;
+                    background-color: rgb(175, 175, 175);
+                    margin-top: 5px;
+                  "
+                ></div>
+                <div
+                  style="
+                    height: 6px;
+                    background-color: green;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                  "
+                  id="playerHealthBar"
+                ></div>
+              </div>
+            </div>
+            <!--Battle dialog-->
+            <div
+              style="
+                background-color: white;
+                height: 200px;
+                position: absolute;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                font-family: 'Arial';
-                font-size: 28px;
-                padding: 16px;
-                display: none;
-                cursor: pointer;
-              "
-              id="dialogBox"
-            ></div>
-            <div
-              id="attacksBox"
-              style="
-                width: 66.66%;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-              "
-            ></div>
-            <div
-              style="
+                border-top: 8px rgb(44, 44, 44) solid;
                 display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 33.33%;
-                border-left: 8px rgb(44, 44, 44) solid;
               "
+              id="battle-dialog"
             >
-              <h1 style="margin: 0; font-family: 'Arial'; font-size: 24px">
-                Attack Type
-              </h1>
+              <!-- Text Dialog-->
+              <div
+                style="
+                  background-color: white;
+                  position: absolute;
+                  top: 0;
+                  bottom: 0;
+                  left: 0;
+                  right: 0;
+                  font-family: 'Arial';
+                  font-size: 28px;
+                  padding: 16px;
+                  display: none;
+                  cursor: pointer;
+                "
+                id="dialogBox"
+              ></div>
+              <div
+                id="attacksBox"
+                style="
+                  width: 66.66%;
+                  display: grid;
+                  grid-template-columns: repeat(2, 1fr);
+                "
+              ></div>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 33.33%;
+                  border-left: 8px rgb(44, 44, 44) solid;
+                "
+              >
+                <h1 style="margin: 0; font-family: 'Arial'; font-size: 24px">
+                  Attack Type
+                </h1>
+              </div>
             </div>
           </div>
-        </div>
-        <!--Overworld/Battle sequences-->
-        <canvas></canvas>
+          <!--Overworld/Battle sequences-->
+          <canvas></canvas>
 
-        <script
-          src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
-          integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"
-        ></script>
-        <script src="poke/data/collisions.js"></script>
-        <script src="poke/data/battlezones.js"></script>
-        <script src="poke/data/attacks.js"></script>
-        <script src="poke/data/pokemon.js"></script>
-        <script src="poke/classes.js"></script>
-        <script src="poke/index.js"></script>
-        <script src="poke/battleScene.js"></script>
+          <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
+            integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+          ></script>
+          <script src="poke/data/collisions.js"></script>
+          <script src="poke/data/battlezones.js"></script>
+          <script src="poke/data/attacks.js"></script>
+          <script src="poke/data/pokemon.js"></script>
+          <script src="poke/classes.js"></script>
+          <script src="poke/index.js"></script>
+          <script src="poke/battleScene.js"></script>
+        </div>
       </div>
       <hr class="divider" />
       <p class="text-muted mb-5 text-center">

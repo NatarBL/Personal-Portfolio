@@ -196,7 +196,6 @@ class Pokemon extends Sprite {
       ? "The opposing " + this.name + " fainted."
       : "Your " + this.name + " fainted!";
     document.querySelector("#dialogBox").innerHTML = faintMsg;
-    battle.initiated = false;
     gsap.to(this.position, {
       y: this.position.y + 25,
     });
@@ -220,6 +219,9 @@ class Pokemon extends Sprite {
         });
       },
     });
+    setTimeout(() => {
+      battle.initiated = false;
+    }, 1000);
   }
 }
 function addToQueue() {
