@@ -150,7 +150,6 @@ class Pokemon extends Sprite {
           100
         ).toFixed(2)
     );
-
     recipient.health =
       recipient.health -
       calculator(

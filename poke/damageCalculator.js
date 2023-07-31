@@ -1,3 +1,4 @@
+var isCriticalHit = false;
 function calculator(lvl, power, uType, oType, uAtk, oDef, atkType) {
   let stab = uType === atkType ? 1.5 : 1.0;
   let superEffective = effectiveScale(atkType, oType);
@@ -9,7 +10,11 @@ function calculator(lvl, power, uType, oType, uAtk, oDef, atkType) {
     stab *
     randomScale *
     superEffective;
-
+  if (criticalScale === 2.0) {
+    isCriticalHit = true;
+  } else {
+    isCriticalHit = false;
+  }
   return damageCalc;
 }
 function effectiveScale(atkType, oType) {
