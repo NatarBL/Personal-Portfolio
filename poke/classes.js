@@ -96,20 +96,25 @@ class Pokemon extends Sprite {
     this.name = name;
     this.attacks = attacks;
   }
+  run() {
+    battle.initiated = false;
+    document.querySelector("#dialogBox").style.display = "block";
+    document.querySelector("#dialogBox").innerHTML =
+      "You got away successfully!";
+    gsap.to("#overlappingDiv", {
+      opacity: 1,
+      onComplete: () => {
+        cancelAnimationFrame(battleAnimationID);
+        animate();
+        document.querySelector("#battleDisplay").style.display = "none";
+        gsap.to("#overlappingDiv", {
+          opacity: 0,
+        });
+      },
+    });
+    addToQueue();
+  }
   attack({ attack, recipient, renderedSprite }) {
-    // Create queue of events
-    // document.querySelector("#dialogBox").addEventListener("click", (e) => {
-    //   if (isAnimating === false) {
-    //     console.log("Running code...");
-    //     if (queue.length > 0) {
-    //       queue[0]();
-    //       queue.shift();
-    //     } else {
-    //       document.querySelector("#dialogBox").style.display = "none";
-    //     }
-    //   }
-    // });
-
     document.querySelector("#dialogBox").style.display = "block";
     document.querySelector("#dialogBox").innerHTML =
       this.name + " used " + attack.name + "!";

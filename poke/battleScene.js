@@ -20,6 +20,7 @@ function initBattle() {
   document.querySelector("#playerHealthBar").style.width = "100%";
   document.querySelector("#enemyHealthBar").style.width = "100%";
   document.querySelector("#attacksBox").replaceChildren();
+  document.querySelector("#runBox").replaceChildren();
 
   torchicFront = new Pokemon(pokemon.TorchicFront);
   torchicBack = new Pokemon(pokemon.TorchicBack);
@@ -32,8 +33,17 @@ function initBattle() {
     button.innerHTML = attack.name;
     document.querySelector("#attacksBox").append(button);
   });
+  const button = document.createElement("button");
+  button.style = "border: 0; font-family: 'Arial'; font-size: 24px";
+  button.innerHTML = "Run";
+  document.querySelector("#runBox").append(button);
+
   document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (e) => {
+      if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Run") {
+        torchicBack.run();
+        return;
+      }
       const selectedAttack =
         attacks[e.currentTarget.innerHTML.replace(/\s/g, "")];
       torchicBack.attack({

@@ -31,7 +31,7 @@ const pokemon = {
     },
     isEnemy: false,
     name: "Torchic Back",
-    attacks: [attacks.Tackle, attacks.Fireball],
+    attacks: [attacks.Tackle, attacks.Tackle, attacks.Fireball],
     animate: false,
   },
 };
