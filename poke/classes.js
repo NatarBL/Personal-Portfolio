@@ -86,6 +86,7 @@ class Pokemon extends Sprite {
     type,
     health,
     maxHealth,
+    speed,
   }) {
     super({
       position,
@@ -105,6 +106,7 @@ class Pokemon extends Sprite {
     this.phyAttack = phyAttack;
     this.type = type;
     this.maxHealth = maxHealth;
+    this.speed = speed;
   }
   run() {
     battle.initiated = false;
@@ -125,31 +127,10 @@ class Pokemon extends Sprite {
     addToQueue();
   }
   attack({ attack, recipient, renderedSprite }) {
-    document.querySelector("#dialogBox").style.display = "block";
-    document.querySelector("#dialogBox").innerHTML =
-      this.name + " used " + attack.name + "!";
+    let dialogMsg = this.name + " used " + attack.name + "!";
     let movementDistance = 20;
     let rotation = 1;
     let healthBar = "#enemyHealthBar";
-    console.log(
-      this.name +
-        " used " +
-        attack.name +
-        ": " +
-        (
-          (calculator(
-            this.level,
-            attack.damage,
-            this.type,
-            recipient.type,
-            this.phyAttack,
-            recipient.phyDefense,
-            attack.type
-          ) /
-            recipient.maxHealth) *
-          100
-        ).toFixed(2)
-    );
     recipient.health =
       recipient.health -
       calculator(
@@ -166,7 +147,18 @@ class Pokemon extends Sprite {
       healthBar = "#playerHealthBar";
       rotation = -2.2;
     }
-    isAnimating = true;
+    if (isCriticalHit) {
+      dialogMsg =
+        this.name + " used " + attack.name + ", it was a critical hit!";
+    } else if (isSuperEffective) {
+      dialogMsg =
+        this.name + " used " + attack.name + ", it was super effective!";
+    } else if (isNotEffective) {
+      dialogMsg =
+        this.name + " used " + attack.name + ", it wasn't very effective.";
+    }
+    document.querySelector("#dialogBox").style.display = "block";
+    document.querySelector("#dialogBox").innerHTML = dialogMsg;
 
     switch (attack.name) {
       case "Tackle":
@@ -279,7 +271,7 @@ function addToQueue() {
     } else {
       document.querySelector("#dialogBox").style.display = "none";
     }
-  }, 1500);
+  }, 2000);
 }
 class Boundary {
   static width = 32;
