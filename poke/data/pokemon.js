@@ -16,6 +16,12 @@ const pokemon = {
     name: "Torchic Front",
     attacks: [attacks.Tackle, attacks.Fireball],
     animate: false,
+    level: 5,
+    phyAttack: 12,
+    phyDefense: 10,
+    type: "Fire",
+    health: 21,
+    maxHealth: 21,
   },
   TorchicBack: {
     position: {
@@ -33,5 +39,11 @@ const pokemon = {
     name: "Torchic Back",
     attacks: [attacks.Tackle, attacks.Tackle, attacks.Fireball],
     animate: false,
+    level: 5,
+    phyAttack: 12,
+    phyDefense: 10,
+    type: "Fire",
+    health: 21,
+    maxHealth: 21,
   },
 };

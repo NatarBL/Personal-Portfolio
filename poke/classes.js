@@ -80,6 +80,12 @@ class Pokemon extends Sprite {
     isEnemy = false,
     name,
     attacks,
+    level,
+    phyDefense,
+    phyAttack,
+    type,
+    health,
+    maxHealth,
   }) {
     super({
       position,
@@ -90,11 +96,15 @@ class Pokemon extends Sprite {
       animate,
       rotation,
     });
-
-    this.health = 100;
+    this.health = health;
     this.isEnemy = isEnemy;
     this.name = name;
     this.attacks = attacks;
+    this.level = level;
+    this.phyDefense = phyDefense;
+    this.phyAttack = phyAttack;
+    this.type = type;
+    this.maxHealth = maxHealth;
   }
   run() {
     battle.initiated = false;
@@ -121,7 +131,37 @@ class Pokemon extends Sprite {
     let movementDistance = 20;
     let rotation = 1;
     let healthBar = "#enemyHealthBar";
-    recipient.health = recipient.health - attack.damage;
+    console.log(
+      this.name +
+        " used " +
+        attack.name +
+        ": " +
+        (
+          (calculator(
+            this.level,
+            attack.damage,
+            this.type,
+            recipient.type,
+            this.phyAttack,
+            recipient.phyDefense,
+            attack.type
+          ) /
+            recipient.maxHealth) *
+          100
+        ).toFixed(2)
+    );
+
+    recipient.health =
+      recipient.health -
+      calculator(
+        this.level,
+        attack.damage,
+        this.type,
+        recipient.type,
+        this.phyAttack,
+        recipient.phyDefense,
+        attack.type
+      );
     if (this.isEnemy) {
       movementDistance = -20;
       healthBar = "#playerHealthBar";
@@ -142,7 +182,9 @@ class Pokemon extends Sprite {
             onComplete: () => {
               // Enemy is hit
               gsap.to(healthBar, {
-                width: recipient.health + "%",
+                width:
+                  ((recipient.health / recipient.maxHealth) * 100).toFixed(2) +
+                  "%",
               });
               gsap.to(recipient, {
                 opacity: 0,
@@ -181,7 +223,9 @@ class Pokemon extends Sprite {
           duration: 0.6,
           onComplete: () => {
             gsap.to(healthBar, {
-              width: recipient.health + "%",
+              width:
+                ((recipient.health / recipient.maxHealth) * 100).toFixed(2) +
+                "%",
             });
             gsap.to(recipient, {
               opacity: 0,
