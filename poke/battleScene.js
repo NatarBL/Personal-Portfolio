@@ -8,8 +8,8 @@ const battleBackground = new Sprite({
   image: battleBackgroundImage,
 });
 
-let torchicFront;
-let torchicBack;
+let enemy;
+let user;
 let renderedSprite;
 let queue = [];
 let battleAnimationID;
@@ -22,12 +22,12 @@ function initBattle() {
   document.querySelector("#attacksBox").replaceChildren();
   document.querySelector("#runBox").replaceChildren();
 
-  torchicFront = new Pokemon(pokemon.TorchicFront);
-  torchicBack = new Pokemon(pokemon.TorchicBack);
-  renderedSprite = [torchicFront, torchicBack];
+  enemy = new Pokemon(pokemon.TreeckoFront);
+  user = new Pokemon(pokemon.TorchicBack);
+  renderedSprite = [enemy, user];
   queue = [];
 
-  torchicBack.attacks.forEach((attack) => {
+  user.attacks.forEach((attack) => {
     const button = document.createElement("button");
     button.style = "border: 0; font-family: 'Arial'; font-size: 24px";
     button.innerHTML = attack.name;
@@ -41,46 +41,88 @@ function initBattle() {
   document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (e) => {
       if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Run") {
-        torchicBack.run();
+        user.run();
         return;
       }
-      const selectedAttack =
-        attacks[e.currentTarget.innerHTML.replace(/\s/g, "")];
-      torchicBack.attack({
-        attack: selectedAttack,
-        recipient: torchicFront,
-        renderedSprite,
-      });
-      // Check if enemy pokemon fainted
-      if (torchicFront.health <= 0) {
-        queue.push(() => {
-          torchicFront.faint();
-        });
-        return;
-      }
-
-      // Enemy attacks here
-      const randAttack =
-        torchicBack.attacks[
-          Math.floor(Math.random() * torchicBack.attacks.length)
-        ];
-      queue.push(() => {
-        torchicFront.attack({
-          attack: randAttack,
-          recipient: torchicBack,
-          renderedSprite,
-        });
-        if (torchicBack.health <= 0) {
-          queue.push(() => {
-            torchicBack.faint();
-          });
-          return;
+      if (user.speed > enemy.speed) {
+        attackFirst(user, enemy, e, queue);
+      } else if (user.speed < enemy.speed) {
+        attackSecond(enemy, user, e, queue);
+      } else {
+        let randNum = Math.random();
+        if (randNum > 0.5) {
+          attackFirst(user, enemy, e, queue);
+        } else {
+          attackSecond(enemy, user, e, queue);
         }
-      });
+      }
     });
   });
 }
+function attackFirst(first, second, e, queue) {
+  // User attacks here
+  const selectedAttack = attacks[e.currentTarget.innerHTML.replace(/\s/g, "")];
+  first.attack({
+    attack: selectedAttack,
+    recipient: second,
+    renderedSprite,
+  });
+  if (second.health <= 0) {
+    queue.push(() => {
+      second.faint();
+    });
+    return;
+  }
 
+  // Enemy attacks here
+  const randAttack =
+    second.attacks[Math.floor(Math.random() * second.attacks.length)];
+  queue.push(() => {
+    second.attack({
+      attack: randAttack,
+      recipient: first,
+      renderedSprite,
+    });
+    if (first.health <= 0) {
+      queue.push(() => {
+        first.faint();
+      });
+      return;
+    }
+  });
+}
+function attackSecond(first, second, e, queue) {
+  // Enemy attacks here
+  const randAttack =
+    first.attacks[Math.floor(Math.random() * first.attacks.length)];
+  first.attack({
+    attack: randAttack,
+    recipient: second,
+    renderedSprite,
+  });
+  if (second.health <= 0) {
+    queue.push(() => {
+      second.faint();
+    });
+    return;
+  }
+
+  // // User attacks here
+  const selectedAttack = attacks[e.currentTarget.innerHTML.replace(/\s/g, "")];
+  queue.push(() => {
+    second.attack({
+      attack: selectedAttack,
+      recipient: first,
+      renderedSprite,
+    });
+    if (first.health <= 0) {
+      queue.push(() => {
+        first.faint();
+      });
+      return;
+    }
+  });
+}
 function animateBattle() {
   battleAnimationID = window.requestAnimationFrame(animateBattle);
   battleBackground.draw();

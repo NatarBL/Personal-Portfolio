@@ -86,6 +86,7 @@ class Pokemon extends Sprite {
     type,
     health,
     maxHealth,
+    speed,
   }) {
     super({
       position,
@@ -105,6 +106,7 @@ class Pokemon extends Sprite {
     this.phyAttack = phyAttack;
     this.type = type;
     this.maxHealth = maxHealth;
+    this.speed = speed;
   }
   run() {
     battle.initiated = false;
@@ -125,31 +127,10 @@ class Pokemon extends Sprite {
     addToQueue();
   }
   attack({ attack, recipient, renderedSprite }) {
-    document.querySelector("#dialogBox").style.display = "block";
-    document.querySelector("#dialogBox").innerHTML =
-      this.name + " used " + attack.name + "!";
+    let dialogMsg = this.name + " used " + attack.name + "!";
     let movementDistance = 20;
     let rotation = 1;
     let healthBar = "#enemyHealthBar";
-    console.log(
-      this.name +
-        " used " +
-        attack.name +
-        ": " +
-        (
-          (calculator(
-            this.level,
-            attack.damage,
-            this.type,
-            recipient.type,
-            this.phyAttack,
-            recipient.phyDefense,
-            attack.type
-          ) /
-            recipient.maxHealth) *
-          100
-        ).toFixed(2)
-    );
     recipient.health =
       recipient.health -
       calculator(
@@ -166,8 +147,17 @@ class Pokemon extends Sprite {
       healthBar = "#playerHealthBar";
       rotation = -2.2;
     }
-    isAnimating = true;
-
+    if (isCriticalHit && attack.damage !== 0) {
+      dialogMsg = this.name + " used " + attack.name + ", it's a critical hit!";
+    } else if (isSuperEffective) {
+      dialogMsg =
+        this.name + " used " + attack.name + ", it's super effective!";
+    } else if (isNotEffective) {
+      dialogMsg =
+        this.name + " used " + attack.name + ", it isn't very effective.";
+    }
+    document.querySelector("#dialogBox").style.display = "block";
+    document.querySelector("#dialogBox").innerHTML = dialogMsg;
     switch (attack.name) {
       case "Tackle":
         const tl = gsap.timeline();
@@ -237,6 +227,136 @@ class Pokemon extends Sprite {
           },
         });
         break;
+      case "Growl":
+        let growlAdditional = recipient.isEnemy ? 0 : 36;
+        const growstatdownImage = new Image();
+        growstatdownImage.src = "./poke/Images/stat-down4.png";
+        const growlStatdown = new Sprite({
+          position: {
+            x: recipient.position.x + 36,
+            y: recipient.position.y + growlAdditional,
+          },
+          image: growstatdownImage,
+          frames: {
+            max: 4,
+            hold: 10,
+          },
+          animate: true,
+        });
+        renderedSprite.splice(2, 0, growlStatdown);
+
+        document.querySelector("#dialogBox").innerHTML =
+          dialogMsg + " " + recipient.name + "s attack dropped by 1.";
+        recipient.phyDefense = recipient.phyAttack * 0.67;
+        gsap.to(growlStatdown.position, {
+          duration: 1.5,
+          onComplete: () => {
+            gsap.to(healthBar, {
+              width:
+                ((recipient.health / recipient.maxHealth) * 100).toFixed(2) +
+                "%",
+            });
+            addToQueue();
+            renderedSprite.splice(2, 1);
+          },
+        });
+        break;
+      case "Tail Whip":
+        let additional = recipient.isEnemy ? 0 : 36;
+        const statdownImage = new Image();
+        statdownImage.src = "./poke/Images/stat-down4.png";
+        const statdown = new Sprite({
+          position: {
+            x: recipient.position.x + 36,
+            y: recipient.position.y + additional,
+          },
+          image: statdownImage,
+          frames: {
+            max: 4,
+            hold: 10,
+          },
+          animate: true,
+        });
+        renderedSprite.splice(2, 0, statdown);
+
+        document.querySelector("#dialogBox").innerHTML =
+          dialogMsg + " " + recipient.name + "s defense dropped by 1.";
+        recipient.phyDefense = recipient.phyDefense * 0.67;
+        gsap.to(statdown.position, {
+          duration: 1.5,
+          onComplete: () => {
+            gsap.to(healthBar, {
+              width:
+                ((recipient.health / recipient.maxHealth) * 100).toFixed(2) +
+                "%",
+            });
+            addToQueue();
+            renderedSprite.splice(2, 1);
+          },
+        });
+        break;
+      case "Razor Leaf":
+        const razopleaftl = gsap.timeline();
+
+        razopleaftl
+          .to(this.position, {
+            x: this.position.x - movementDistance * 1.5,
+          })
+          .to(this.position, {
+            x: this.position.x + movementDistance,
+            duration: 0.25,
+            onComplete: () => {
+              // Enemy is hit
+              gsap.to(healthBar, {
+                width:
+                  ((recipient.health / recipient.maxHealth) * 100).toFixed(2) +
+                  "%",
+              });
+              gsap.to(recipient, {
+                opacity: 0,
+                repeat: 7,
+                yoyo: true,
+                duration: 0.1,
+              });
+            },
+          })
+          .to(this.position, {
+            x: this.position.x,
+            duration: 0.5,
+          });
+        addToQueue();
+        break;
+      case "Water Gun":
+        const waterguntl = gsap.timeline();
+
+        waterguntl
+          .to(this.position, {
+            x: this.position.x - movementDistance * 1.5,
+          })
+          .to(this.position, {
+            x: this.position.x + movementDistance,
+            duration: 0.25,
+            onComplete: () => {
+              // Enemy is hit
+              gsap.to(healthBar, {
+                width:
+                  ((recipient.health / recipient.maxHealth) * 100).toFixed(2) +
+                  "%",
+              });
+              gsap.to(recipient, {
+                opacity: 0,
+                repeat: 7,
+                yoyo: true,
+                duration: 0.1,
+              });
+            },
+          })
+          .to(this.position, {
+            x: this.position.x,
+            duration: 0.5,
+          });
+        addToQueue();
+        break;
     }
   }
   faint() {
@@ -271,6 +391,7 @@ class Pokemon extends Sprite {
   }
 }
 function addToQueue() {
+  let strLen = document.querySelector("#dialogBox").innerHTML.length;
   setTimeout(() => {
     isAnimating = false;
     if (queue.length > 0) {
@@ -279,7 +400,7 @@ function addToQueue() {
     } else {
       document.querySelector("#dialogBox").style.display = "none";
     }
-  }, 1500);
+  }, strLen * 10 + 1500);
 }
 class Boundary {
   static width = 32;
