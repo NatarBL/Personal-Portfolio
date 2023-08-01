@@ -30,6 +30,11 @@ function calculator(lvl, power, uType, oType, uAtk, oDef, atkType) {
     isNotEffective = false;
     isSuperEffective = false;
   }
+
+  // Move's with 0 power aren't intended to do damage
+  if (power === 0) {
+    return 0;
+  }
   return damageCalc;
 }
 function effectiveScale(atkType, oType) {

@@ -8,8 +8,8 @@ const battleBackground = new Sprite({
   image: battleBackgroundImage,
 });
 
-let torchicFront;
-let torchicBack;
+let enemy;
+let user;
 let renderedSprite;
 let queue = [];
 let battleAnimationID;
@@ -22,12 +22,12 @@ function initBattle() {
   document.querySelector("#attacksBox").replaceChildren();
   document.querySelector("#runBox").replaceChildren();
 
-  torchicFront = new Pokemon(pokemon.TorchicFront);
-  torchicBack = new Pokemon(pokemon.TorchicBack);
-  renderedSprite = [torchicFront, torchicBack];
+  enemy = new Pokemon(pokemon.TreeckoFront);
+  user = new Pokemon(pokemon.TorchicBack);
+  renderedSprite = [enemy, user];
   queue = [];
 
-  torchicBack.attacks.forEach((attack) => {
+  user.attacks.forEach((attack) => {
     const button = document.createElement("button");
     button.style = "border: 0; font-family: 'Arial'; font-size: 24px";
     button.innerHTML = attack.name;
@@ -41,21 +41,19 @@ function initBattle() {
   document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (e) => {
       if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Run") {
-        torchicBack.run();
+        user.run();
         return;
       }
-      console.log("Spd: " + torchicBack.speed);
-      console.log("Spd: " + torchicFront.speed);
-      if (torchicBack.speed > torchicFront.speed) {
-        attackFirst(torchicBack, torchicFront, e, queue);
-      } else if (torchicBack.speed < torchicFront.speed) {
-        attackSecond(torchicFront, torchicBack, e, queue);
+      if (user.speed > enemy.speed) {
+        attackFirst(user, enemy, e, queue);
+      } else if (user.speed < enemy.speed) {
+        attackSecond(enemy, user, e, queue);
       } else {
         let randNum = Math.random();
         if (randNum > 0.5) {
-          attackFirst(torchicBack, torchicFront, e, queue);
+          attackFirst(user, enemy, e, queue);
         } else {
-          attackSecond(torchicFront, torchicBack, e, queue);
+          attackSecond(enemy, user, e, queue);
         }
       }
     });
@@ -78,7 +76,7 @@ function attackFirst(first, second, e, queue) {
 
   // Enemy attacks here
   const randAttack =
-    first.attacks[Math.floor(Math.random() * first.attacks.length)];
+    second.attacks[Math.floor(Math.random() * second.attacks.length)];
   queue.push(() => {
     second.attack({
       attack: randAttack,
@@ -96,7 +94,7 @@ function attackFirst(first, second, e, queue) {
 function attackSecond(first, second, e, queue) {
   // Enemy attacks here
   const randAttack =
-    second.attacks[Math.floor(Math.random() * second.attacks.length)];
+    first.attacks[Math.floor(Math.random() * first.attacks.length)];
   first.attack({
     attack: randAttack,
     recipient: second,
