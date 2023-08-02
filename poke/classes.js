@@ -108,6 +108,61 @@ class Pokemon extends Sprite {
     this.maxHealth = maxHealth;
     this.speed = speed;
   }
+  switchPoke() {
+    document.querySelector("#pokeSelect").replaceChildren();
+    document.querySelector("#runBox").replaceChildren();
+
+    let exampleTeam = ["Torchic", "Mudkip", "Treecko"];
+    exampleTeam.forEach((member) => {
+      const button = document.createElement("button");
+      button.style = "border: 0; font-family: 'Arial'; font-size: 24px";
+      button.innerHTML = member;
+      document.querySelector("#pokeSelect").append(button);
+    });
+
+    document.querySelector("#pokeSelect").style.display = "grid";
+    document.querySelectorAll("button").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Torchic") {
+          console.log("Torchic");
+          document.querySelector("#pokeSelect").style.display = "none";
+          document.querySelector("#dialogBox").style.display = "block";
+          document.querySelector("#dialogBox").innerHTML =
+            "Torchic was sent out.";
+          addToQueue();
+        }
+        if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Mudkip") {
+          console.log("Mudkip");
+          document.querySelector("#pokeSelect").style.display = "none";
+          document.querySelector("#dialogBox").style.display = "block";
+          document.querySelector("#dialogBox").innerHTML =
+            "Mudkip was sent out.";
+          addToQueue();
+        }
+        if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Treecko") {
+          let treecko = new Pokemon(pokemon.TreeckoBack);
+          user = treecko;
+          user.attacks = treecko.attacks;
+          renderedSprite[1] = treecko;
+          createDialogButtons(user, enemy);
+          const randAttack =
+            enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
+          queue.push(() => {
+            secondAttacksFirst(user, enemy, randAttack);
+          });
+          console.log("Treecko");
+          document.querySelector("#pokeSelect").style.display = "none";
+          document.querySelector("#dialogBox").style.display = "block";
+          document.querySelector("#dialogBox").innerHTML =
+            "Treecko was sent out.";
+          addToQueue();
+        }
+      });
+    });
+  }
+  catch() {
+    console.log("Catch");
+  }
   run() {
     battle.initiated = false;
     document.querySelector("#dialogBox").style.display = "block";
@@ -127,6 +182,7 @@ class Pokemon extends Sprite {
     addToQueue();
   }
   attack({ attack, recipient, renderedSprite }) {
+    console.log("Attacking...");
     let dialogMsg = this.name + " used " + attack.name + "!";
     let movementDistance = 20;
     let rotation = 1;
