@@ -230,7 +230,7 @@ class Pokemon extends Sprite {
       case "Growl":
         let growlAdditional = recipient.isEnemy ? 0 : 36;
         const growstatdownImage = new Image();
-        growstatdownImage.src = "./poke/Images/stat-down4.png";
+        growstatdownImage.src = "./poke/Images/stat-down.png";
         const growlStatdown = new Sprite({
           position: {
             x: recipient.position.x + 36,
@@ -264,7 +264,7 @@ class Pokemon extends Sprite {
       case "Tail Whip":
         let additional = recipient.isEnemy ? 0 : 36;
         const statdownImage = new Image();
-        statdownImage.src = "./poke/Images/stat-down4.png";
+        statdownImage.src = "./poke/Images/stat-down.png";
         const statdown = new Sprite({
           position: {
             x: recipient.position.x + 36,

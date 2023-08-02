@@ -1,3 +1,4 @@
+let encounters = ["Torchic", "Mudkip", "Treecko"];
 // Create pokemon objects
 const pokemon = {
   TorchicFront: {

@@ -22,7 +22,19 @@ function initBattle() {
   document.querySelector("#attacksBox").replaceChildren();
   document.querySelector("#runBox").replaceChildren();
 
-  enemy = new Pokemon(pokemon.TreeckoFront);
+  var randomEncounter = Math.floor(Math.random() * encounters.length);
+
+  switch (encounters[randomEncounter]) {
+    case "Torchic":
+      enemy = new Pokemon(pokemon.TorchicFront);
+      break;
+    case "Mudkip":
+      enemy = new Pokemon(pokemon.MudkipFront);
+      break;
+    case "Treecko":
+      enemy = new Pokemon(pokemon.TreeckoFront);
+      break;
+  }
   user = new Pokemon(pokemon.TorchicBack);
   renderedSprite = [enemy, user];
   queue = [];
