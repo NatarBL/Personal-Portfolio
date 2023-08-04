@@ -67,12 +67,60 @@ class Sprite {
       }
     }
   }
+  drawPokemon() {
+    if (!this.isEnemy) {
+      c.drawImage(
+        this.backImage,
+        // Frames moved over when moving character
+        this.frames.val * this.width,
+        0,
+        this.backImage.width / this.frames.max,
+        this.backImage.height,
+        72,
+        72,
+        this.backImage.width / this.frames.max,
+        this.backImage.height
+      );
+    } else {
+      c.drawImage(
+        this.frontImage,
+        // Frames moved over when moving character
+        this.frames.val * this.width,
+        0,
+        this.frontImage.width / this.frames.max,
+        this.frontImage.height,
+        312,
+        -32,
+        this.frontImage.width / this.frames.max,
+        this.frontImage.height
+      );
+    }
+
+    c.restore();
+
+    if (!this.animate) {
+      // Returns character to standing when stopped moving
+      this.frames.val = 0;
+      return;
+    }
+    if (this.frames.max > 1) {
+      this.frames.elapsed++;
+    }
+    if (this.frames.elapsed % 10 === 0) {
+      if (this.frames.val < this.frames.max - 1) {
+        this.frames.val++;
+      } else {
+        this.frames.val = 0;
+      }
+    }
+  }
 }
 class Pokemon extends Sprite {
   constructor({
     position,
     velocity,
-    image,
+    backImage,
+    frontImage,
     frames = { max: 1 },
     sprites,
     animate = false,
@@ -107,61 +155,56 @@ class Pokemon extends Sprite {
     this.type = type;
     this.maxHealth = maxHealth;
     this.speed = speed;
+    this.backImage = new Image();
+    this.frontImage = new Image();
+    this.backImage.src = backImage.src;
+    this.frontImage.src = frontImage.src;
   }
   switchPoke() {
     document.querySelector("#pokeSelect").replaceChildren();
     document.querySelector("#runBox").replaceChildren();
-
-    let exampleTeam = ["Torchic", "Mudkip", "Treecko"];
-    exampleTeam.forEach((member) => {
+    let selectedMon;
+    pokemonTeam.forEach((member) => {
       const button = document.createElement("button");
       button.style = "border: 0; font-family: 'Arial'; font-size: 24px";
-      button.innerHTML = member;
+      button.innerHTML = member.name;
       document.querySelector("#pokeSelect").append(button);
     });
 
     document.querySelector("#pokeSelect").style.display = "grid";
     document.querySelectorAll("button").forEach((button) => {
       button.addEventListener("click", (e) => {
-        if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Torchic") {
-          console.log("Torchic");
-          document.querySelector("#pokeSelect").style.display = "none";
-          document.querySelector("#dialogBox").style.display = "block";
-          document.querySelector("#dialogBox").innerHTML =
-            "Torchic was sent out.";
-          addToQueue();
+        for (let i = 0; i < pokemonTeam.length; i++) {
+          if (
+            e.currentTarget.innerHTML.replace(/\s/g, "") == pokemonTeam[i].name
+          ) {
+            selectedMon = pokemonTeam[i];
+          }
         }
-        if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Mudkip") {
-          console.log("Mudkip");
-          document.querySelector("#pokeSelect").style.display = "none";
-          document.querySelector("#dialogBox").style.display = "block";
-          document.querySelector("#dialogBox").innerHTML =
-            "Mudkip was sent out.";
-          addToQueue();
-        }
-        if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Treecko") {
-          let treecko = new Pokemon(pokemon.TreeckoBack);
-          user = treecko;
-          user.attacks = treecko.attacks;
-          renderedSprite[1] = treecko;
-          createDialogButtons(user, enemy);
-          const randAttack =
-            enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
-          queue.push(() => {
-            secondAttacksFirst(user, enemy, randAttack);
-          });
-          console.log("Treecko");
-          document.querySelector("#pokeSelect").style.display = "none";
-          document.querySelector("#dialogBox").style.display = "block";
-          document.querySelector("#dialogBox").innerHTML =
-            "Treecko was sent out.";
-          addToQueue();
-        }
+        user = selectedMon;
+        user.isEnemy = false;
+        user.attacks = selectedMon.attacks;
+        renderedSprite[1] = selectedMon;
+        createDialogButtons(user, enemy);
+        const randAttack =
+          enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
+        queue.push(() => {
+          secondAttacksFirst(user, enemy, randAttack);
+        });
+        document.querySelector("#pokeSelect").style.display = "none";
+        document.querySelector("#dialogBox").style.display = "block";
+        document.querySelector("#dialogBox").innerHTML =
+          user.name + " was sent out.";
+        addToQueue();
       });
     });
   }
   catch() {
-    console.log("Catch");
+    let randNum = Math.floor(Math.random() * 100);
+    if (randNum > 50) {
+      console.log("Caught.");
+      pokemonTeam.push(enemy);
+    }
   }
   run() {
     battle.initiated = false;
@@ -182,8 +225,9 @@ class Pokemon extends Sprite {
     addToQueue();
   }
   attack({ attack, recipient, renderedSprite }) {
-    console.log("Attacking...");
     let dialogMsg = this.name + " used " + attack.name + "!";
+    // console.log(this);
+    // console.log(recipient);
     let movementDistance = 20;
     let rotation = 1;
     let healthBar = "#enemyHealthBar";
@@ -248,6 +292,9 @@ class Pokemon extends Sprite {
       case "Fireball":
         const fireballImage = new Image();
         fireballImage.src = "./poke/Images/fireball2.png";
+        console.log("this: " + this.position.x);
+        console.log("reci: " + recipient.position.x);
+        //TODO: Check if enemy is here, change x and y accordingly
         const fireball = new Sprite({
           position: {
             x: this.position.x + 65,

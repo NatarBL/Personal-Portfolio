@@ -13,6 +13,7 @@ let user;
 let renderedSprite;
 let queue = [];
 let battleAnimationID;
+var pokemonTeam = [];
 
 function initBattle() {
   document.querySelector("#battleDisplay").style.display = "block";
@@ -24,18 +25,29 @@ function initBattle() {
 
   var randomEncounter = Math.floor(Math.random() * encounters.length);
 
+  // Create new Pokemon to encounter
   switch (encounters[randomEncounter]) {
     case "Torchic":
-      enemy = new Pokemon(pokemon.TorchicFront);
+      enemy = new Pokemon(pokemon.Torchic);
       break;
     case "Mudkip":
-      enemy = new Pokemon(pokemon.MudkipFront);
+      enemy = new Pokemon(pokemon.Mudkip);
       break;
     case "Treecko":
-      enemy = new Pokemon(pokemon.TreeckoFront);
+      enemy = new Pokemon(pokemon.Treecko);
+
       break;
   }
-  user = new Pokemon(pokemon.TorchicBack);
+  user = new Pokemon(pokemon.Torchic);
+  user.isEnemy = false;
+  user.position.x = 72;
+  user.position.y = 72;
+  enemy.position.x = 312;
+  enemy.position.y = -32;
+  if (pokemonTeam.length === 0) {
+    pokemonTeam.push(user);
+  }
+
   renderedSprite = [enemy, user];
   queue = [];
   createDialogButtons(user, enemy);
@@ -117,6 +129,7 @@ function attackSecond(first, second, e, queue) {
     secondAttacksFirst(first, second, selectedAttack);
   });
 }
+
 function firstAttacksSecond(first, second, attacktype) {
   first.attack({
     attack: attacktype,
@@ -131,6 +144,8 @@ function firstAttacksSecond(first, second, attacktype) {
   }
 }
 function secondAttacksFirst(first, second, attacktype) {
+  //   console.log(first);
+  //   console.log(second);
   second.attack({
     attack: attacktype,
     recipient: first,
@@ -153,6 +168,10 @@ function animateBattle() {
   battleBackground.draw();
 
   renderedSprite.forEach((sprite) => {
-    sprite.draw();
+    if (encounters.includes(sprite.name)) {
+      sprite.drawPokemon();
+    } else {
+      sprite.draw();
+    }
   });
 }

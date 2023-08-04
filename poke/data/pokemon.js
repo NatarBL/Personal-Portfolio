@@ -1,7 +1,7 @@
 let encounters = ["Torchic", "Mudkip", "Treecko"];
 // Create pokemon objects
 const pokemon = {
-  TorchicFront: {
+  Torchic: {
     position: {
       x: 312,
       y: -32,
@@ -10,11 +10,15 @@ const pokemon = {
       max: 1,
       hold: 1,
     },
-    image: {
+    frontImage: {
       src: "./poke/Images/torchic-front.png",
     },
+    backImage: {
+      src: "./poke/Images/torchic-back.png",
+    },
+
     isEnemy: true,
-    name: "Torchic Front",
+    name: "Torchic",
     attacks: [attacks.Fireball, attacks.TailWhip],
     animate: false,
     level: 5,
@@ -25,31 +29,7 @@ const pokemon = {
     maxHealth: 45,
     speed: 45,
   },
-  TorchicBack: {
-    position: {
-      x: 72,
-      y: 72,
-    },
-    frames: {
-      max: 1,
-      hold: 1,
-    },
-    image: {
-      src: "./poke/Images/torchic-back.png",
-    },
-    isEnemy: false,
-    name: "Torchic",
-    attacks: [attacks.Tackle, attacks.Fireball, attacks.TailWhip],
-    animate: false,
-    level: 15,
-    phyAttack: 60,
-    phyDefense: 40,
-    type: "Fire",
-    health: 45,
-    maxHealth: 45,
-    speed: 45,
-  },
-  MudkipFront: {
+  Mudkip: {
     position: {
       x: 312,
       y: -32,
@@ -58,8 +38,11 @@ const pokemon = {
       max: 1,
       hold: 1,
     },
-    image: {
+    frontImage: {
       src: "./poke/Images/mudkip-front.png",
+    },
+    backImage: {
+      src: "./poke/Images/mudkip-back.png",
     },
     isEnemy: true,
     name: "Mudkip",
@@ -73,7 +56,7 @@ const pokemon = {
     maxHealth: 45,
     speed: 45,
   },
-  TreeckoFront: {
+  Treecko: {
     position: {
       x: 312,
       y: -32,
@@ -82,8 +65,11 @@ const pokemon = {
       max: 1,
       hold: 1,
     },
-    image: {
+    frontImage: {
       src: "./poke/Images/treecko-front.png",
+    },
+    backImage: {
+      src: "./poke/Images/treecko-back.png",
     },
     isEnemy: true,
     name: "Treecko",
@@ -96,29 +82,5 @@ const pokemon = {
     health: 45,
     maxHealth: 45,
     speed: 50,
-  },
-  TreeckoBack: {
-    position: {
-      x: 72,
-      y: 72,
-    },
-    frames: {
-      max: 1,
-      hold: 1,
-    },
-    image: {
-      src: "./poke/Images/treecko-back.png",
-    },
-    isEnemy: false,
-    name: "Treecko",
-    attacks: [attacks.Tackle, attacks.RazorLeaf, attacks.TailWhip],
-    animate: false,
-    level: 15,
-    phyAttack: 60,
-    phyDefense: 40,
-    type: "Grass",
-    health: 45,
-    maxHealth: 45,
-    speed: 45,
   },
 };
