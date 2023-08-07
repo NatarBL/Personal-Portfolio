@@ -405,10 +405,10 @@ class Pokemon extends Sprite {
 
         razopleaftl
           .to(this.position, {
-            x: reciX - movementDistance * 1.5,
+            x: userX - movementDistance * 1.5,
           })
           .to(this.position, {
-            x: reciX + movementDistance,
+            x: userX + movementDistance,
             duration: 0.25,
             onComplete: () => {
               // Enemy is hit
@@ -426,7 +426,7 @@ class Pokemon extends Sprite {
             },
           })
           .to(this.position, {
-            x: reciX,
+            x: userX,
             duration: 0.5,
           });
         addToQueue();
@@ -436,10 +436,10 @@ class Pokemon extends Sprite {
 
         waterguntl
           .to(this.position, {
-            x: reciX - movementDistance * 1.5,
+            x: userX - movementDistance * 1.5,
           })
           .to(this.position, {
-            x: reciX + movementDistance,
+            x: userX + movementDistance,
             duration: 0.25,
             onComplete: () => {
               // Enemy is hit
@@ -457,7 +457,7 @@ class Pokemon extends Sprite {
             },
           })
           .to(this.position, {
-            x: reciX,
+            x: userX,
             duration: 0.5,
           });
         addToQueue();
