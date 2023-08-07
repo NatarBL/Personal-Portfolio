@@ -13,7 +13,6 @@ let user;
 let renderedSprite;
 let queue = [];
 let battleAnimationID;
-var pokemonTeam = [];
 
 function initBattle() {
   document.querySelector("#battleDisplay").style.display = "block";
@@ -25,67 +24,34 @@ function initBattle() {
 
   var randomEncounter = Math.floor(Math.random() * encounters.length);
 
-  // Create new Pokemon to encounter
   switch (encounters[randomEncounter]) {
     case "Torchic":
-      enemy = new Pokemon(pokemon.Torchic);
+      enemy = new Pokemon(pokemon.TorchicFront);
       break;
     case "Mudkip":
-      enemy = new Pokemon(pokemon.Mudkip);
+      enemy = new Pokemon(pokemon.MudkipFront);
       break;
     case "Treecko":
-      enemy = new Pokemon(pokemon.Treecko);
-
+      enemy = new Pokemon(pokemon.TreeckoFront);
       break;
   }
-  user = new Pokemon(pokemon.Torchic);
-  user.isEnemy = false;
-  user.position.x = 72;
-  user.position.y = 72;
-  enemy.position.x = 312;
-  enemy.position.y = -32;
-  if (pokemonTeam.length === 0) {
-    pokemonTeam.push(user);
-  }
-
+  user = new Pokemon(pokemon.TorchicBack);
   renderedSprite = [enemy, user];
   queue = [];
-  createDialogButtons(user, enemy);
-}
-function createDialogButtons(user, enemy) {
-  const switchButton = document.createElement("button");
-  switchButton.style = "border: 0; font-family: 'Arial'; font-size: 24px";
-  switchButton.innerHTML = "Switch";
-  document.querySelector("#runBox").append(switchButton);
 
-  const catchButton = document.createElement("button");
-  catchButton.style = "border: 0; font-family: 'Arial'; font-size: 24px";
-  catchButton.innerHTML = "Catch";
-  document.querySelector("#runBox").append(catchButton);
-
-  const runButton = document.createElement("button");
-  runButton.style = "border: 0; font-family: 'Arial'; font-size: 24px";
-  runButton.innerHTML = "Run";
-  document.querySelector("#runBox").append(runButton);
-
-  document.querySelector("#attacksBox").replaceChildren();
   user.attacks.forEach((attack) => {
     const button = document.createElement("button");
     button.style = "border: 0; font-family: 'Arial'; font-size: 24px";
     button.innerHTML = attack.name;
     document.querySelector("#attacksBox").append(button);
   });
+  const button = document.createElement("button");
+  button.style = "border: 0; font-family: 'Arial'; font-size: 24px";
+  button.innerHTML = "Run";
+  document.querySelector("#runBox").append(button);
 
   document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (e) => {
-      if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Switch") {
-        user.switchPoke();
-        return;
-      }
-      if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Catch") {
-        user.catch();
-        return;
-      }
       if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Run") {
         user.run();
         return;
@@ -108,31 +74,8 @@ function createDialogButtons(user, enemy) {
 function attackFirst(first, second, e, queue) {
   // User attacks here
   const selectedAttack = attacks[e.currentTarget.innerHTML.replace(/\s/g, "")];
-  firstAttacksSecond(first, second, selectedAttack);
-
-  // Enemy attacks here
-  const randAttack =
-    second.attacks[Math.floor(Math.random() * second.attacks.length)];
-  queue.push(() => {
-    secondAttacksFirst(first, second, randAttack);
-  });
-}
-function attackSecond(first, second, e, queue) {
-  // Enemy attacks here
-  const randAttack =
-    first.attacks[Math.floor(Math.random() * first.attacks.length)];
-  firstAttacksSecond(first, second, randAttack);
-
-  // User attacks here
-  const selectedAttack = attacks[e.currentTarget.innerHTML.replace(/\s/g, "")];
-  queue.push(() => {
-    secondAttacksFirst(first, second, selectedAttack);
-  });
-}
-
-function firstAttacksSecond(first, second, attacktype) {
   first.attack({
-    attack: attacktype,
+    attack: selectedAttack,
     recipient: second,
     renderedSprite,
   });
@@ -142,36 +85,61 @@ function firstAttacksSecond(first, second, attacktype) {
     });
     return;
   }
+
+  // Enemy attacks here
+  const randAttack =
+    second.attacks[Math.floor(Math.random() * second.attacks.length)];
+  queue.push(() => {
+    second.attack({
+      attack: randAttack,
+      recipient: first,
+      renderedSprite,
+    });
+    if (first.health <= 0) {
+      queue.push(() => {
+        first.faint();
+      });
+      return;
+    }
+  });
 }
-function secondAttacksFirst(first, second, attacktype) {
-  //   console.log(first);
-  //   console.log(second);
-  second.attack({
-    attack: attacktype,
-    recipient: first,
+function attackSecond(first, second, e, queue) {
+  // Enemy attacks here
+  const randAttack =
+    first.attacks[Math.floor(Math.random() * first.attacks.length)];
+  first.attack({
+    attack: randAttack,
+    recipient: second,
     renderedSprite,
   });
-  if (first.health <= 0) {
+  if (second.health <= 0) {
     queue.push(() => {
-      first.faint();
+      second.faint();
     });
     return;
   }
+
+  // // User attacks here
+  const selectedAttack = attacks[e.currentTarget.innerHTML.replace(/\s/g, "")];
+  queue.push(() => {
+    second.attack({
+      attack: selectedAttack,
+      recipient: first,
+      renderedSprite,
+    });
+    if (first.health <= 0) {
+      queue.push(() => {
+        first.faint();
+      });
+      return;
+    }
+  });
 }
 function animateBattle() {
-  document.querySelector("#playerName").innerHTML = user.name;
-  document.querySelector("#playerLevel").innerHTML = "Lv. " + user.level;
-  document.querySelector("#enemyName").innerHTML = enemy.name;
-  document.querySelector("#enemyLevel").innerHTML = "Lv. " + enemy.level;
-
   battleAnimationID = window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
 
   renderedSprite.forEach((sprite) => {
-    if (encounters.includes(sprite.name)) {
-      sprite.drawPokemon();
-    } else {
-      sprite.draw();
-    }
+    sprite.draw();
   });
 }

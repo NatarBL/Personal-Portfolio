@@ -14,8 +14,11 @@ function calculator(lvl, power, uType, oType, uAtk, oDef, atkType) {
     randomScale *
     superEffective;
   // Set critical boolean
-  isCriticalHit = criticalScale === 2.0;
-
+  if (criticalScale === 2.0) {
+    isCriticalHit = true;
+  } else {
+    isCriticalHit = false;
+  }
   // Set effectivity boolean
   if (superEffective === 2.0) {
     isNotEffective = false;
