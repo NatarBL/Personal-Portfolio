@@ -226,11 +226,13 @@ class Pokemon extends Sprite {
   }
   attack({ attack, recipient, renderedSprite }) {
     let dialogMsg = this.name + " used " + attack.name + "!";
-    // console.log(this);
-    // console.log(recipient);
     let movementDistance = 20;
     let rotation = 1;
     let healthBar = "#enemyHealthBar";
+    let userX = 72;
+    let userY = 72;
+    let reciX = 312;
+    let reciY = -32;
     recipient.health =
       recipient.health -
       calculator(
@@ -246,6 +248,10 @@ class Pokemon extends Sprite {
       movementDistance = -20;
       healthBar = "#playerHealthBar";
       rotation = -2.2;
+      userX = 312;
+      userY = -32;
+      reciX = 72;
+      reciY = 72;
     }
     if (isCriticalHit && attack.damage !== 0) {
       dialogMsg = this.name + " used " + attack.name + ", it's a critical hit!";
@@ -261,12 +267,11 @@ class Pokemon extends Sprite {
     switch (attack.name) {
       case "Tackle":
         const tl = gsap.timeline();
-
         tl.to(this.position, {
-          x: this.position.x - movementDistance * 1.5,
+          x: userX - movementDistance * 1.5,
         })
           .to(this.position, {
-            x: this.position.x + movementDistance,
+            x: userX + movementDistance,
             duration: 0.25,
             onComplete: () => {
               // Enemy is hit
@@ -284,7 +289,7 @@ class Pokemon extends Sprite {
             },
           })
           .to(this.position, {
-            x: this.position.x,
+            x: userX,
             duration: 0.5,
           });
         addToQueue();
@@ -292,13 +297,10 @@ class Pokemon extends Sprite {
       case "Fireball":
         const fireballImage = new Image();
         fireballImage.src = "./poke/Images/fireball2.png";
-        console.log("this: " + this.position.x);
-        console.log("reci: " + recipient.position.x);
-        //TODO: Check if enemy is here, change x and y accordingly
         const fireball = new Sprite({
           position: {
-            x: this.position.x + 65,
-            y: this.position.y + 75,
+            x: userX + 65,
+            y: userY + 75,
           },
           image: fireballImage,
           frames: {
@@ -310,8 +312,8 @@ class Pokemon extends Sprite {
         });
         renderedSprite.splice(1, 0, fireball);
         gsap.to(fireball.position, {
-          x: recipient.position.x + 65,
-          y: recipient.position.y + 75,
+          x: reciX + 65,
+          y: reciY + 75,
           duration: 0.6,
           onComplete: () => {
             gsap.to(healthBar, {
@@ -336,8 +338,8 @@ class Pokemon extends Sprite {
         growstatdownImage.src = "./poke/Images/stat-down.png";
         const growlStatdown = new Sprite({
           position: {
-            x: recipient.position.x + 36,
-            y: recipient.position.y + growlAdditional,
+            x: reciX + 36,
+            y: reciY + growlAdditional,
           },
           image: growstatdownImage,
           frames: {
@@ -370,8 +372,8 @@ class Pokemon extends Sprite {
         statdownImage.src = "./poke/Images/stat-down.png";
         const statdown = new Sprite({
           position: {
-            x: recipient.position.x + 36,
-            y: recipient.position.y + additional,
+            x: reciX + 36,
+            y: reciY + additional,
           },
           image: statdownImage,
           frames: {
@@ -403,10 +405,10 @@ class Pokemon extends Sprite {
 
         razopleaftl
           .to(this.position, {
-            x: this.position.x - movementDistance * 1.5,
+            x: reciX - movementDistance * 1.5,
           })
           .to(this.position, {
-            x: this.position.x + movementDistance,
+            x: reciX + movementDistance,
             duration: 0.25,
             onComplete: () => {
               // Enemy is hit
@@ -424,7 +426,7 @@ class Pokemon extends Sprite {
             },
           })
           .to(this.position, {
-            x: this.position.x,
+            x: reciX,
             duration: 0.5,
           });
         addToQueue();
@@ -434,10 +436,10 @@ class Pokemon extends Sprite {
 
         waterguntl
           .to(this.position, {
-            x: this.position.x - movementDistance * 1.5,
+            x: reciX - movementDistance * 1.5,
           })
           .to(this.position, {
-            x: this.position.x + movementDistance,
+            x: reciX + movementDistance,
             duration: 0.25,
             onComplete: () => {
               // Enemy is hit
@@ -455,7 +457,7 @@ class Pokemon extends Sprite {
             },
           })
           .to(this.position, {
-            x: this.position.x,
+            x: reciX,
             duration: 0.5,
           });
         addToQueue();

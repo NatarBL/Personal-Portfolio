@@ -19,7 +19,12 @@ const pokemon = {
 
     isEnemy: true,
     name: "Torchic",
-    attacks: [attacks.Fireball, attacks.TailWhip],
+    attacks: [
+      attacks.Fireball,
+      attacks.TailWhip,
+      attacks.Tackle,
+      attacks.Growl,
+    ],
     animate: false,
     level: 5,
     phyAttack: 60,
@@ -73,7 +78,7 @@ const pokemon = {
     },
     isEnemy: true,
     name: "Treecko",
-    attacks: [attacks.RazorLeaf, attacks.TailWhip],
+    attacks: [attacks.RazorLeaf, attacks.Growl],
     animate: false,
     level: 7,
     phyAttack: 60,
