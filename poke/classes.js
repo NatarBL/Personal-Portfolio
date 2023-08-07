@@ -67,60 +67,12 @@ class Sprite {
       }
     }
   }
-  drawPokemon() {
-    if (!this.isEnemy) {
-      c.drawImage(
-        this.backImage,
-        // Frames moved over when moving character
-        this.frames.val * this.width,
-        0,
-        this.backImage.width / this.frames.max,
-        this.backImage.height,
-        72,
-        72,
-        this.backImage.width / this.frames.max,
-        this.backImage.height
-      );
-    } else {
-      c.drawImage(
-        this.frontImage,
-        // Frames moved over when moving character
-        this.frames.val * this.width,
-        0,
-        this.frontImage.width / this.frames.max,
-        this.frontImage.height,
-        312,
-        -32,
-        this.frontImage.width / this.frames.max,
-        this.frontImage.height
-      );
-    }
-
-    c.restore();
-
-    if (!this.animate) {
-      // Returns character to standing when stopped moving
-      this.frames.val = 0;
-      return;
-    }
-    if (this.frames.max > 1) {
-      this.frames.elapsed++;
-    }
-    if (this.frames.elapsed % 10 === 0) {
-      if (this.frames.val < this.frames.max - 1) {
-        this.frames.val++;
-      } else {
-        this.frames.val = 0;
-      }
-    }
-  }
 }
 class Pokemon extends Sprite {
   constructor({
     position,
     velocity,
-    backImage,
-    frontImage,
+    image,
     frames = { max: 1 },
     sprites,
     animate = false,
@@ -155,56 +107,6 @@ class Pokemon extends Sprite {
     this.type = type;
     this.maxHealth = maxHealth;
     this.speed = speed;
-    this.backImage = new Image();
-    this.frontImage = new Image();
-    this.backImage.src = backImage.src;
-    this.frontImage.src = frontImage.src;
-  }
-  switchPoke() {
-    document.querySelector("#pokeSelect").replaceChildren();
-    document.querySelector("#runBox").replaceChildren();
-    let selectedMon;
-    pokemonTeam.forEach((member) => {
-      const button = document.createElement("button");
-      button.style = "border: 0; font-family: 'Arial'; font-size: 24px";
-      button.innerHTML = member.name;
-      document.querySelector("#pokeSelect").append(button);
-    });
-
-    document.querySelector("#pokeSelect").style.display = "grid";
-    document.querySelectorAll("button").forEach((button) => {
-      button.addEventListener("click", (e) => {
-        for (let i = 0; i < pokemonTeam.length; i++) {
-          if (
-            e.currentTarget.innerHTML.replace(/\s/g, "") == pokemonTeam[i].name
-          ) {
-            selectedMon = pokemonTeam[i];
-          }
-        }
-        user = selectedMon;
-        user.isEnemy = false;
-        user.attacks = selectedMon.attacks;
-        renderedSprite[1] = selectedMon;
-        createDialogButtons(user, enemy);
-        const randAttack =
-          enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
-        queue.push(() => {
-          secondAttacksFirst(user, enemy, randAttack);
-        });
-        document.querySelector("#pokeSelect").style.display = "none";
-        document.querySelector("#dialogBox").style.display = "block";
-        document.querySelector("#dialogBox").innerHTML =
-          user.name + " was sent out.";
-        addToQueue();
-      });
-    });
-  }
-  catch() {
-    let randNum = Math.floor(Math.random() * 100);
-    if (randNum > 50) {
-      console.log("Caught.");
-      pokemonTeam.push(enemy);
-    }
   }
   run() {
     battle.initiated = false;
@@ -229,10 +131,6 @@ class Pokemon extends Sprite {
     let movementDistance = 20;
     let rotation = 1;
     let healthBar = "#enemyHealthBar";
-    let userX = 72;
-    let userY = 72;
-    let reciX = 312;
-    let reciY = -32;
     recipient.health =
       recipient.health -
       calculator(
@@ -248,10 +146,6 @@ class Pokemon extends Sprite {
       movementDistance = -20;
       healthBar = "#playerHealthBar";
       rotation = -2.2;
-      userX = 312;
-      userY = -32;
-      reciX = 72;
-      reciY = 72;
     }
     if (isCriticalHit && attack.damage !== 0) {
       dialogMsg = this.name + " used " + attack.name + ", it's a critical hit!";
@@ -267,11 +161,12 @@ class Pokemon extends Sprite {
     switch (attack.name) {
       case "Tackle":
         const tl = gsap.timeline();
+
         tl.to(this.position, {
-          x: userX - movementDistance * 1.5,
+          x: this.position.x - movementDistance * 1.5,
         })
           .to(this.position, {
-            x: userX + movementDistance,
+            x: this.position.x + movementDistance,
             duration: 0.25,
             onComplete: () => {
               // Enemy is hit
@@ -289,7 +184,7 @@ class Pokemon extends Sprite {
             },
           })
           .to(this.position, {
-            x: userX,
+            x: this.position.x,
             duration: 0.5,
           });
         addToQueue();
@@ -299,8 +194,8 @@ class Pokemon extends Sprite {
         fireballImage.src = "./poke/Images/fireball2.png";
         const fireball = new Sprite({
           position: {
-            x: userX + 65,
-            y: userY + 75,
+            x: this.position.x + 65,
+            y: this.position.y + 75,
           },
           image: fireballImage,
           frames: {
@@ -312,8 +207,8 @@ class Pokemon extends Sprite {
         });
         renderedSprite.splice(1, 0, fireball);
         gsap.to(fireball.position, {
-          x: reciX + 65,
-          y: reciY + 75,
+          x: recipient.position.x + 65,
+          y: recipient.position.y + 75,
           duration: 0.6,
           onComplete: () => {
             gsap.to(healthBar, {
@@ -338,8 +233,8 @@ class Pokemon extends Sprite {
         growstatdownImage.src = "./poke/Images/stat-down.png";
         const growlStatdown = new Sprite({
           position: {
-            x: reciX + 36,
-            y: reciY + growlAdditional,
+            x: recipient.position.x + 36,
+            y: recipient.position.y + growlAdditional,
           },
           image: growstatdownImage,
           frames: {
@@ -372,8 +267,8 @@ class Pokemon extends Sprite {
         statdownImage.src = "./poke/Images/stat-down.png";
         const statdown = new Sprite({
           position: {
-            x: reciX + 36,
-            y: reciY + additional,
+            x: recipient.position.x + 36,
+            y: recipient.position.y + additional,
           },
           image: statdownImage,
           frames: {
@@ -405,10 +300,10 @@ class Pokemon extends Sprite {
 
         razopleaftl
           .to(this.position, {
-            x: userX - movementDistance * 1.5,
+            x: this.position.x - movementDistance * 1.5,
           })
           .to(this.position, {
-            x: userX + movementDistance,
+            x: this.position.x + movementDistance,
             duration: 0.25,
             onComplete: () => {
               // Enemy is hit
@@ -426,7 +321,7 @@ class Pokemon extends Sprite {
             },
           })
           .to(this.position, {
-            x: userX,
+            x: this.position.x,
             duration: 0.5,
           });
         addToQueue();
@@ -436,10 +331,10 @@ class Pokemon extends Sprite {
 
         waterguntl
           .to(this.position, {
-            x: userX - movementDistance * 1.5,
+            x: this.position.x - movementDistance * 1.5,
           })
           .to(this.position, {
-            x: userX + movementDistance,
+            x: this.position.x + movementDistance,
             duration: 0.25,
             onComplete: () => {
               // Enemy is hit
@@ -457,7 +352,7 @@ class Pokemon extends Sprite {
             },
           })
           .to(this.position, {
-            x: userX,
+            x: this.position.x,
             duration: 0.5,
           });
         addToQueue();

@@ -1,7 +1,7 @@
 let encounters = ["Torchic", "Mudkip", "Treecko"];
 // Create pokemon objects
 const pokemon = {
-  Torchic: {
+  TorchicFront: {
     position: {
       x: 312,
       y: -32,
@@ -10,19 +10,39 @@ const pokemon = {
       max: 1,
       hold: 1,
     },
-    frontImage: {
+    image: {
       src: "./poke/Images/torchic-front.png",
     },
-    backImage: {
+    isEnemy: true,
+    name: "Torchic Front",
+    attacks: [attacks.Fireball, attacks.TailWhip],
+    animate: false,
+    level: 5,
+    phyAttack: 60,
+    phyDefense: 40,
+    type: "Fire",
+    health: 45,
+    maxHealth: 45,
+    speed: 45,
+  },
+  TorchicBack: {
+    position: {
+      x: 72,
+      y: 72,
+    },
+    frames: {
+      max: 1,
+      hold: 1,
+    },
+    image: {
       src: "./poke/Images/torchic-back.png",
     },
-
-    isEnemy: true,
-    name: "Torchic",
+    isEnemy: false,
+    name: "Torchic Back",
     attacks: [
+      attacks.Tackle,
       attacks.Fireball,
       attacks.TailWhip,
-      attacks.Tackle,
       attacks.Growl,
     ],
     animate: false,
@@ -34,7 +54,7 @@ const pokemon = {
     maxHealth: 45,
     speed: 45,
   },
-  Mudkip: {
+  MudkipFront: {
     position: {
       x: 312,
       y: -32,
@@ -43,11 +63,8 @@ const pokemon = {
       max: 1,
       hold: 1,
     },
-    frontImage: {
+    image: {
       src: "./poke/Images/mudkip-front.png",
-    },
-    backImage: {
-      src: "./poke/Images/mudkip-back.png",
     },
     isEnemy: true,
     name: "Mudkip",
@@ -61,7 +78,7 @@ const pokemon = {
     maxHealth: 45,
     speed: 45,
   },
-  Treecko: {
+  TreeckoFront: {
     position: {
       x: 312,
       y: -32,
@@ -70,17 +87,14 @@ const pokemon = {
       max: 1,
       hold: 1,
     },
-    frontImage: {
+    image: {
       src: "./poke/Images/treecko-front.png",
-    },
-    backImage: {
-      src: "./poke/Images/treecko-back.png",
     },
     isEnemy: true,
     name: "Treecko",
-    attacks: [attacks.RazorLeaf, attacks.Growl],
+    attacks: [attacks.RazorLeaf, attacks.TailWhip],
     animate: false,
-    level: 7,
+    level: 5,
     phyAttack: 60,
     phyDefense: 40,
     type: "Grass",
