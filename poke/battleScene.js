@@ -80,7 +80,7 @@ function createDialogButtons(user, enemy) {
   document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (e) => {
       if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Switch") {
-        user.switchPoke();
+        user.switchPoke(false);
         return;
       }
       if (e.currentTarget.innerHTML.replace(/\s/g, "") === "Catch") {
@@ -204,4 +204,17 @@ function resetStats() {
     pokemon.phyDefense = pokemon.maxPhyDefense;
     pokemon.phyAttack = pokemon.maxPhyAttack;
   });
+}
+
+function whiteOut() {
+  let faintCounter = 0;
+  pokemonTeam.forEach((pokemon) => {
+    if (pokemon.health <= 0) {
+      faintCounter++;
+    }
+  });
+  if (faintCounter === pokemonTeam.length) {
+    return true;
+  }
+  return false;
 }
