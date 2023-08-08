@@ -36,19 +36,49 @@ class Sprite {
       -this.position.y - this.height / 2
     );
     c.globalAlpha = this.opacity;
-    c.drawImage(
-      this.image,
+    if (this.isEnemy == 1) {
+      c.drawImage(
+        this.frontImage,
+        // Frames moved over when moving character
+        this.frames.val * this.width,
+        0,
+        this.frontImage.width / this.frames.max,
+        this.frontImage.height,
+        this.position.x,
+        this.position.y,
+        this.frontImage.width / this.frames.max,
+        this.frontImage.height
+      );
+    } else if (this.isEnemy == 2) {
+      c.drawImage(
+        this.backImage,
 
-      // Frames moved over when moving character
-      this.frames.val * this.width,
-      0,
-      this.image.width / this.frames.max,
-      this.image.height,
-      this.position.x,
-      this.position.y,
-      this.image.width / this.frames.max,
-      this.image.height
-    );
+        // Frames moved over when moving character
+        this.frames.val * this.width,
+        0,
+        this.backImage.width / this.frames.max,
+        this.backImage.height,
+        this.position.x,
+        this.position.y,
+        this.backImage.width / this.frames.max,
+        this.backImage.height
+      );
+    } else {
+      c.drawImage(
+        this.image,
+
+        // Frames moved over when moving character
+        this.frames.val * this.width,
+        0,
+        this.image.width / this.frames.max,
+        this.image.height,
+        this.position.x,
+        this.position.y,
+        this.image.width / this.frames.max,
+        this.image.height
+      );
+    }
+
     c.restore();
 
     if (!this.animate) {
@@ -72,12 +102,13 @@ class Pokemon extends Sprite {
   constructor({
     position,
     velocity,
-    image,
+    backImage,
+    frontImage,
     frames = { max: 1 },
     sprites,
     animate = false,
     rotation = 0,
-    isEnemy = false,
+    isEnemy = 2,
     name,
     attacks,
     level,
@@ -87,6 +118,7 @@ class Pokemon extends Sprite {
     health,
     maxHealth,
     speed,
+    id,
   }) {
     super({
       position,
@@ -107,6 +139,57 @@ class Pokemon extends Sprite {
     this.type = type;
     this.maxHealth = maxHealth;
     this.speed = speed;
+    this.backImage = new Image();
+    this.frontImage = new Image();
+    this.backImage.src = backImage.src;
+    this.frontImage.src = frontImage.src;
+    this.id = id;
+  }
+  switchPoke() {
+    document.querySelector("#pokeSelect").replaceChildren();
+    document.querySelector("#runBox").replaceChildren();
+    let selectedMon;
+    pokemonTeam.forEach((member) => {
+      const button = document.createElement("button");
+      button.style = "border: 0; font-family: 'Arial'; font-size: 24px";
+      button.innerHTML = member.name;
+      document.querySelector("#pokeSelect").append(button);
+    });
+
+    document.querySelector("#pokeSelect").style.display = "grid";
+    document.querySelectorAll("button").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        for (let i = 0; i < pokemonTeam.length; i++) {
+          if (
+            e.currentTarget.innerHTML.replace(/\s/g, "") == pokemonTeam[i].name
+          ) {
+            selectedMon = pokemonTeam[i];
+          }
+        }
+        user = selectedMon;
+        user.isEnemy = 2;
+        user.attacks = selectedMon.attacks;
+        renderedSprite[1] = selectedMon;
+        createDialogButtons(user, enemy);
+        const randAttack =
+          enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
+        queue.push(() => {
+          secondAttacksFirst(user, enemy, randAttack);
+        });
+        document.querySelector("#pokeSelect").style.display = "none";
+        document.querySelector("#dialogBox").style.display = "block";
+        document.querySelector("#dialogBox").innerHTML =
+          user.name + " was sent out.";
+        addToQueue();
+      });
+    });
+  }
+  catch() {
+    let randNum = Math.floor(Math.random() * 100);
+    if (randNum > 50) {
+      console.log("Caught.");
+      addToTeam(enemy);
+    }
   }
   run() {
     battle.initiated = false;
@@ -142,7 +225,7 @@ class Pokemon extends Sprite {
         recipient.phyDefense,
         attack.type
       );
-    if (this.isEnemy) {
+    if (this.isEnemy === 1) {
       movementDistance = -20;
       healthBar = "#playerHealthBar";
       rotation = -2.2;
@@ -161,7 +244,6 @@ class Pokemon extends Sprite {
     switch (attack.name) {
       case "Tackle":
         const tl = gsap.timeline();
-
         tl.to(this.position, {
           x: this.position.x - movementDistance * 1.5,
         })
@@ -228,7 +310,7 @@ class Pokemon extends Sprite {
         });
         break;
       case "Growl":
-        let growlAdditional = recipient.isEnemy ? 0 : 36;
+        let growlAdditional = recipient.isEnemy === 1 ? 0 : 36;
         const growstatdownImage = new Image();
         growstatdownImage.src = "./poke/Images/stat-down.png";
         const growlStatdown = new Sprite({
@@ -262,7 +344,7 @@ class Pokemon extends Sprite {
         });
         break;
       case "Tail Whip":
-        let additional = recipient.isEnemy ? 0 : 36;
+        let additional = recipient.isEnemy === 1 ? 0 : 36;
         const statdownImage = new Image();
         statdownImage.src = "./poke/Images/stat-down.png";
         const statdown = new Sprite({
@@ -360,9 +442,10 @@ class Pokemon extends Sprite {
     }
   }
   faint() {
-    const faintMsg = this.isEnemy
-      ? "The opposing " + this.name + " fainted."
-      : "Your " + this.name + " fainted!";
+    const faintMsg =
+      this.isEnemy === 1
+        ? "The opposing " + this.name + " fainted."
+        : "Your " + this.name + " fainted!";
     document.querySelector("#dialogBox").innerHTML = faintMsg;
     battle.initiated = false;
     gsap.to(this.position, {
