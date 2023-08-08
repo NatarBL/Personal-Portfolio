@@ -37,17 +37,19 @@ function initBattle() {
       enemy = new Pokemon(pokemon.TreeckoFront);
       break;
   }
-  user = new Pokemon(pokemon.TorchicBack);
-  user.isEnemy = 2;
-  user.position.x = 72;
-  user.position.y = 72;
-  enemy.position.x = 312;
-  enemy.position.y = -32;
 
   if (pokemonTeam.length === 0) {
+    user = new Pokemon(pokemon.TorchicBack);
+    user.isEnemy = 2;
+    user.position.x = 72;
+    user.position.y = 72;
+    enemy.position.x = 312;
+    enemy.position.y = -32;
     pokemonTeam.push(user);
   }
-
+  console.log("Health: " + user.health);
+  document.querySelector("#playerHealthBar").style.width =
+    ((user.health / user.maxHealth) * 100).toFixed(2) + "%";
   renderedSprite = [enemy, user];
   queue = [];
   createDialogButtons(user, enemy);

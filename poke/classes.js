@@ -170,7 +170,6 @@ class Pokemon extends Sprite {
         user.attacks = selectedMon.attacks;
         renderedSprite[1] = selectedMon;
         createDialogButtons(user, enemy);
-        console.log(user.health / user.maxHealth);
         document.querySelector("#playerHealthBar").style.width =
           ((user.health / user.maxHealth) * 100).toFixed(2) + "%";
         const randAttack =
