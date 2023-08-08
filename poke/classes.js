@@ -113,7 +113,9 @@ class Pokemon extends Sprite {
     attacks,
     level,
     phyDefense,
+    maxPhyDefense,
     phyAttack,
+    maxPhyAttack,
     type,
     health,
     maxHealth,
@@ -135,7 +137,9 @@ class Pokemon extends Sprite {
     this.attacks = attacks;
     this.level = level;
     this.phyDefense = phyDefense;
+    this.maxPhyDefense = maxPhyDefense;
     this.phyAttack = phyAttack;
+    this.maxPhyAttack = maxPhyAttack;
     this.type = type;
     this.maxHealth = maxHealth;
     this.speed = speed;

@@ -47,7 +47,6 @@ function initBattle() {
     enemy.position.y = -32;
     pokemonTeam.push(user);
   }
-  console.log("Health: " + user.health);
   document.querySelector("#playerHealthBar").style.width =
     ((user.health / user.maxHealth) * 100).toFixed(2) + "%";
   renderedSprite = [enemy, user];
@@ -139,6 +138,7 @@ function firstAttacksSecond(first, second, attacktype) {
     renderedSprite,
   });
   if (second.health <= 0) {
+    resetStats();
     queue.push(() => {
       second.faint();
     });
@@ -152,6 +152,7 @@ function secondAttacksFirst(first, second, attacktype) {
     renderedSprite,
   });
   if (first.health <= 0) {
+    resetStats();
     queue.push(() => {
       first.faint();
     });
@@ -197,4 +198,10 @@ function addToTeam(caught) {
       pokemonTeam.push(wildPokemon);
       break;
   }
+}
+function resetStats() {
+  pokemonTeam.forEach((pokemon) => {
+    pokemon.phyDefense = pokemon.maxPhyDefense;
+    pokemon.phyAttack = pokemon.maxPhyAttack;
+  });
 }
