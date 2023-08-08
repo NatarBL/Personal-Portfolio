@@ -113,7 +113,9 @@ class Pokemon extends Sprite {
     attacks,
     level,
     phyDefense,
+    maxPhyDefense,
     phyAttack,
+    maxPhyAttack,
     type,
     health,
     maxHealth,
@@ -135,7 +137,9 @@ class Pokemon extends Sprite {
     this.attacks = attacks;
     this.level = level;
     this.phyDefense = phyDefense;
+    this.maxPhyDefense = maxPhyDefense;
     this.phyAttack = phyAttack;
+    this.maxPhyAttack = maxPhyAttack;
     this.type = type;
     this.maxHealth = maxHealth;
     this.speed = speed;
@@ -170,7 +174,6 @@ class Pokemon extends Sprite {
         user.attacks = selectedMon.attacks;
         renderedSprite[1] = selectedMon;
         createDialogButtons(user, enemy);
-        console.log(user.health / user.maxHealth);
         document.querySelector("#playerHealthBar").style.width =
           ((user.health / user.maxHealth) * 100).toFixed(2) + "%";
         const randAttack =
