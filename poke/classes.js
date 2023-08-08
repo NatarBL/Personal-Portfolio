@@ -149,7 +149,7 @@ class Pokemon extends Sprite {
     this.frontImage.src = frontImage.src;
     this.id = id;
   }
-  switchPoke() {
+  switchPoke(fainted) {
     document.querySelector("#pokeSelect").replaceChildren();
     document.querySelector("#runBox").replaceChildren();
     let selectedMon;
@@ -158,6 +158,10 @@ class Pokemon extends Sprite {
       button.style = "border: 0; font-family: 'Arial'; font-size: 24px";
       button.innerHTML = member.name;
       document.querySelector("#pokeSelect").append(button);
+      if (member.health <= 0) {
+        button.style.background = "#C68888";
+        button.disabled = true;
+      }
     });
     document.querySelector("#pokeSelect").style.display = "grid";
     document.querySelectorAll("button").forEach((button) => {
@@ -174,13 +178,15 @@ class Pokemon extends Sprite {
         user.attacks = selectedMon.attacks;
         renderedSprite[1] = selectedMon;
         createDialogButtons(user, enemy);
+        if (!fainted) {
+          const randAttack =
+            enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
+          queue.push(() => {
+            secondAttacksFirst(user, enemy, randAttack);
+          });
+        }
         document.querySelector("#playerHealthBar").style.width =
           ((user.health / user.maxHealth) * 100).toFixed(2) + "%";
-        const randAttack =
-          enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
-        queue.push(() => {
-          secondAttacksFirst(user, enemy, randAttack);
-        });
         document.querySelector("#pokeSelect").style.display = "none";
         document.querySelector("#dialogBox").style.display = "block";
         document.querySelector("#dialogBox").innerHTML =
@@ -447,35 +453,42 @@ class Pokemon extends Sprite {
     }
   }
   faint() {
-    const faintMsg =
+    let faintMsg =
       this.isEnemy === 1
         ? "The opposing " + this.name + " fainted."
         : "Your " + this.name + " fainted!";
+    faintMsg = whiteOut() ? "You whited out." : faintMsg;
     document.querySelector("#dialogBox").innerHTML = faintMsg;
-    battle.initiated = false;
-    gsap.to(this.position, {
-      y: this.position.y + 25,
-    });
-    gsap.to(this, {
-      opacity: 0,
-      duration: 2.0,
-      onComplete: () => {
+    setTimeout(() => {
+      if (whiteOut() || this.isEnemy !== 2) {
+        battle.initiated = false;
         gsap.to(this.position, {
-          y: this.position.y - 25,
+          y: this.position.y + 25,
         });
-      },
-    });
-    gsap.to("#overlappingDiv", {
-      opacity: 1,
-      onComplete: () => {
-        cancelAnimationFrame(battleAnimationID);
-        animate();
-        document.querySelector("#battleDisplay").style.display = "none";
-        gsap.to("#overlappingDiv", {
+        gsap.to(this, {
           opacity: 0,
+          duration: 2.0,
+          onComplete: () => {
+            gsap.to(this.position, {
+              y: this.position.y - 25,
+            });
+          },
         });
-      },
-    });
+        gsap.to("#overlappingDiv", {
+          opacity: 1,
+          onComplete: () => {
+            cancelAnimationFrame(battleAnimationID);
+            animate();
+            document.querySelector("#battleDisplay").style.display = "none";
+            gsap.to("#overlappingDiv", {
+              opacity: 0,
+            });
+          },
+        });
+      } else {
+        user.switchPoke(true);
+      }
+    }, 1000);
   }
 }
 function addToQueue() {
