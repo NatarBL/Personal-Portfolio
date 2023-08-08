@@ -155,7 +155,6 @@ class Pokemon extends Sprite {
       button.innerHTML = member.name;
       document.querySelector("#pokeSelect").append(button);
     });
-
     document.querySelector("#pokeSelect").style.display = "grid";
     document.querySelectorAll("button").forEach((button) => {
       button.addEventListener("click", (e) => {
@@ -171,6 +170,9 @@ class Pokemon extends Sprite {
         user.attacks = selectedMon.attacks;
         renderedSprite[1] = selectedMon;
         createDialogButtons(user, enemy);
+        console.log(user.health / user.maxHealth);
+        document.querySelector("#playerHealthBar").style.width =
+          ((user.health / user.maxHealth) * 100).toFixed(2) + "%";
         const randAttack =
           enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
         queue.push(() => {
