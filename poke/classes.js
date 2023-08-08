@@ -170,7 +170,6 @@ class Pokemon extends Sprite {
         user.attacks = selectedMon.attacks;
         renderedSprite[1] = selectedMon;
         createDialogButtons(user, enemy);
-        console.log(user.health / user.maxHealth);
         document.querySelector("#playerHealthBar").style.width =
           ((user.health / user.maxHealth) * 100).toFixed(2) + "%";
         const randAttack =
@@ -187,10 +186,49 @@ class Pokemon extends Sprite {
     });
   }
   catch() {
+    let catchRate = 25;
     let randNum = Math.floor(Math.random() * 100);
-    if (randNum > 50) {
-      console.log("Caught.");
-      addToTeam(enemy);
+    document.querySelector("#dialogBox").style.display = "block";
+    document.querySelector("#dialogBox").innerHTML = "You threw a pokeball.";
+    if (pokemonTeam.length > 2) {
+      document.querySelector("#dialogBox").innerHTML =
+        "Your party is full. You cannot catch another pokemon.";
+      setTimeout(() => {
+        document.querySelector("#dialogBox").style.display = "none";
+      }, 2000);
+      return;
+    }
+    if (randNum > catchRate) {
+      setTimeout(() => {
+        document.querySelector("#dialogBox").innerHTML =
+          enemy.name + " was caught!";
+        addToTeam(enemy);
+        battle.initiated = false;
+        setTimeout(() => {
+          gsap.to("#overlappingDiv", {
+            opacity: 1,
+            onComplete: () => {
+              cancelAnimationFrame(battleAnimationID);
+              animate();
+              document.querySelector("#battleDisplay").style.display = "none";
+              gsap.to("#overlappingDiv", {
+                opacity: 0,
+              });
+            },
+          });
+        }, 1000);
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        document.querySelector("#dialogBox").innerHTML =
+          enemy.name + " escaped!";
+        const randAttack =
+          enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
+        queue.push(() => {
+          secondAttacksFirst(user, enemy, randAttack);
+        });
+        addToQueue();
+      }, 1000);
     }
   }
   run() {
