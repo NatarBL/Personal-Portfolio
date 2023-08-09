@@ -218,3 +218,12 @@ function whiteOut() {
   }
   return false;
 }
+
+function healParty() {
+  pokemonTeam = [];
+  user = new Pokemon(pokemon.TorchicBack);
+  user.isEnemy = 2;
+  user.position.x = 72;
+  user.position.y = 72;
+  pokemonTeam.push(user);
+}

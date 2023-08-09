@@ -501,6 +501,7 @@ class Pokemon extends Sprite {
     document.querySelector("#dialogBox").innerHTML = faintMsg;
     setTimeout(() => {
       if (whiteOut() || this.isEnemy !== 2) {
+        healParty();
         battle.initiated = false;
         gsap.to(this.position, {
           y: this.position.y + 25,
