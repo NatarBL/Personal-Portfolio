@@ -70,13 +70,10 @@
               <a class="nav-link" href="#about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#services">Services</a>
+              <a class="nav-link" href="#services">Technology</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#portfolio">Portfolio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact</a>
             </li>
           </ul>
         </div>
@@ -280,7 +277,7 @@
     <!-- Game Demo -->
     <section class="page-section" id="services">
       <div class="container px-4 px-lg-5 text-center">
-        <h2 class="mb-4">Try a game demo I created below.</h2>
+        <h2 class="mb-4">Try a game demo I created.</h2>
         <div>&nbsp;</div>
         <button
           onclick="showGameDisplay()"
@@ -528,142 +525,57 @@
         </div>
       </div>
     </section>
-    <!-- Download resume-->
-    <section class="page-section bg-dark text-white">
-      <div class="container px-4 px-lg-5 text-center">
-        <h2 class="mb-4">Take a look at my resume!</h2>
-        <a
-          class="btn btn-light btn-xl"
-          href="assets/Bland Resume v1.0.3.pdf"
-          download="BlandResume.pdf"
-          >Download</a
-        >
-      </div>
-    </section>
-    <!-- Contact-->
-    <section class="page-section" id="contact">
-      <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-          <div class="col-lg-8 col-xl-6 text-center">
-            <h2 class="mt-0">Feel free to reach out</h2>
-            <hr class="divider" />
-            <p class="text-muted mb-5">
-              Reach out to me and I'll get back to you as soon as I can :)
-            </p>
+    <footer class="bg-dark py-5">
+      <div class="row" style="margin-left: 5%">
+        <div class="col-md-5">
+          <h5 class="text-md-right">Contact Me</h5>
+          <hr />
+          <h5><i class="fa fa-user"></i> Nathaniel Bland</h5>
+          <div class="row">
+            <div class="col-6">
+              <ul class="list-unstyled">
+                <li>Number</li>
+                <li>Email</li>
+                <li>Location</li>
+              </ul>
+            </div>
+            <div class="col-6">
+              <ul class="list-unstyled">
+                <li>+1 (860) 501-1828</li>
+                <li>blandn@bu.edu</li>
+                <li>Newton, MA</li>
+              </ul>
+            </div>
           </div>
+          <ul class="nav">
+            <li class="nav-item">
+              <a href="https://github.com/NatarBL" class="nav-link"
+                ><i class="fa fa-github fa-lg" style="color: white"></i
+              ></a>
+            </li>
+
+            <li class="nav-item">
+              <a href="https://www.linkedin.com/in/natebland/" class="nav-link"
+                ><i class="fa fa-linkedin fa-lg" style="color: white"></i
+              ></a>
+            </li>
+            <li class="nav-item">
+              <a href="assets/Bland Resume v1.0.3.pdf" class="nav-link"
+                ><i class="fa fa-file fa-lg" download="BlandResume.pdf" style="color: white"></i
+              ></a>
+            </li>
+            <!-- <li class="nav-item">
+              <a>
+                <i
+                  class="fa fa-linkedin fa-lg"
+                  href="assets/Bland Resume v1.0.3.pdf"
+                  download="BlandResume.pdf"
+                ></i>
+              </a> -->
+            </li>
+          </ul>
+          <br />
         </div>
-        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
-          <div class="col-lg-6">
-            <form
-              id="contactForm"
-              data-sb-form-api-token="e2000454-b0a8-42c5-a777-3dbf5d5227b8"
-            >
-              <!-- Name input-->
-              <div class="form-floating mb-3">
-                <input
-                  class="form-control"
-                  id="name"
-                  type="text"
-                  placeholder="Enter your name..."
-                  data-sb-validations="required"
-                />
-                <label for="name">Full name</label>
-                <div class="invalid-feedback" data-sb-feedback="name:required">
-                  A name is required.
-                </div>
-              </div>
-              <!-- Email address input-->
-              <div class="form-floating mb-3">
-                <input
-                  class="form-control"
-                  id="email"
-                  type="email"
-                  placeholder="name@example.com"
-                  data-sb-validations="required,email"
-                />
-                <label for="email">Email address</label>
-                <div class="invalid-feedback" data-sb-feedback="email:required">
-                  An email is required.
-                </div>
-                <div class="invalid-feedback" data-sb-feedback="email:email">
-                  Email is not valid.
-                </div>
-              </div>
-              <!-- Phone number input-->
-              <div class="form-floating mb-3">
-                <input
-                  class="form-control"
-                  id="phone"
-                  type="tel"
-                  placeholder="(123) 456-7890"
-                  data-sb-validations="required"
-                />
-                <label for="phone">Phone number</label>
-                <div class="invalid-feedback" data-sb-feedback="phone:required">
-                  A phone number is required.
-                </div>
-              </div>
-              <!-- Message input-->
-              <div class="form-floating mb-3">
-                <textarea
-                  class="form-control"
-                  id="message"
-                  type="text"
-                  placeholder="Enter your message here..."
-                  style="height: 10rem"
-                  data-sb-validations="required"
-                ></textarea>
-                <label for="message">Message</label>
-                <div
-                  class="invalid-feedback"
-                  data-sb-feedback="message:required"
-                >
-                  A message is required.
-                </div>
-              </div>
-              <!-- Submit success message-->
-              <!---->
-              <!-- This is what your users will see when the form-->
-              <!-- has successfully submitted-->
-              <div class="d-none" id="submitSuccessMessage">
-                <div class="text-center mb-3">
-                  <div class="fw-bolder">Message sent!</div>
-                </div>
-              </div>
-              <!-- Submit error message-->
-              <!---->
-              <!-- This is what your users will see when there is-->
-              <!-- an error submitting the form-->
-              <div class="d-none" id="submitErrorMessage">
-                <div class="text-center text-danger mb-3">
-                  Error sending message!
-                </div>
-              </div>
-              <!-- Submit Button-->
-              <div class="d-grid">
-                <button
-                  class="btn btn-primary btn-xl disabled"
-                  id="submitButton"
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-          <div class="col-lg-4 text-center mb-5 mb-lg-0">
-            <i class="bi-phone fs-2 mb-3 text-muted"></i>
-            <div>+1 (860) 501-1828</div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Footer-->
-    <footer class="bg-light py-5">
-      <div class="container px-4 px-lg-5">
-        <div class="small text-center text-muted">Copyright &copy; 2023</div>
       </div>
     </footer>
     <!-- Bootstrap core JS-->
