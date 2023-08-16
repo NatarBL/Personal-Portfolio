@@ -8,7 +8,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>Nate Bland's Website</title>
     <!--Font Awesome-->
     <link
       rel="stylesheet"
@@ -16,7 +16,7 @@
     />
 
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/Lighthouseico.ico" />
     <!-- Bootstrap Icons-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
@@ -128,7 +128,7 @@
         </div>
       </div>
     </section>
-    <!-- Services-->
+    <!-- Technologies-->
     <section class="page-section" id="services">
       <div class="container px-4 px-lg-5">
         <h2 class="text-center mt-0">Technologies I've worked with!</h2>
@@ -168,109 +168,72 @@
       </div>
     </section>
     <!-- Portfolio-->
-    <div id="portfolio">
-      <div class="container-fluid p-0">
-        <div class="row g-0">
-          <div class="col-lg-4 col-sm-9">
-            <a
-              class="portfolio-box"
-              href="assets/img/portfolio/fullsize/A.jpg"
-              title="https://github.com/NatarBL"
-            >
-              <img
-                class="img-fluid"
-                src="assets/img/portfolio/thumbnails/A.jpg"
-                alt="..."
-              />
-              <div class="portfolio-box-caption">
-                <div class="project-category text-white-50">
-                  Corporate Documentation Website
-                </div>
-                <div class="project-name" style="text-align: left">
-                  <div>&nbsp;</div>
-                  <ul>
-                    <li>
-                      Created website utilized by dozens of credit unions to
-                      access corporate documentation using Firebase.
-                    </li>
-                    <li>
-                      Managed user login credentials, permissions, and stored
-                      documentation as JSONs in Firebase’s Database.
-                    </li>
-                    <li>
-                      Designed frontend using Javascript, HTML, CSS, and PHP.
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-9">
-            <a
-              class="portfolio-box"
-              href="assets/img/portfolio/fullsize/B.jpg"
-              title="https://github.com/NatarBL"
-            >
-              <img
-                class="img-fluid"
-                src="assets/img/portfolio/thumbnails/B.jpg"
-                alt="..."
-              />
-              <div class="portfolio-box-caption">
-                <div class="project-category text-white-50">
-                  Amplitude Onset Detection Program
-                </div>
-                <div class="project-name" style="text-align: left">
-                  <div>&nbsp;</div>
-                  <ul>
-                    <li>
-                      Built an amplitude onset detector using Python that
-                      imported audio files and scanned for unwanted amplitude
-                      spikes in spectral graphs.
-                    </li>
-                    <li>
-                      Eliminated exceeding audio spikes with an error percentage
-                      of 0.02% compared to the python public librosa library
-                      error percentage of 0.46% using a dataset of 175,000
-                      frames across 100 audio files.
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-9">
-            <a
-              class="portfolio-box"
-              href="assets/img/portfolio/fullsize/C.jpg"
-              title="https://github.com/NatarBL"
-            >
-              <img
-                class="img-fluid"
-                src="assets/img/portfolio/thumbnails/C.jpg"
-                alt="..."
-              />
-              <div class="portfolio-box-caption">
-                <div class="project-category text-white-50">
-                  Green Posh Hackathon Website
-                </div>
-                <div class="project-name" style="text-align: left">
-                  <div>&nbsp;</div>
-                  <ul>
-                    <li>
-                      Co-developed a hackathon winning website that promoted
-                      recycling by creating a virtual marketplace for users to
-                      donate or trade used clothing.
-                    </li>
-                    <li>
-                      Hosted website using WordPress and created frontend using
-                      React framework.
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </a>
-          </div>
+    <div id="portfolio" >
+      <div class="img-container" onmouseenter="mouseOverA()" onmouseleave="mouseOutA()">
+        <img src="assets/img/portfolio/thumbnails/A.jpg" alt="Avatar" class="imageA" style="width:33.33%; float: left;">
+        <div id="imgDescriptionA" style="position:relative; display: none;">
+          <p>Software Project</p>
+          <h3>Corporate Documentation Website</h3>
+          <p class="text-muted mb-0" >
+            <div>&nbsp;</div>
+            <ul style="text-align: left;">
+              <li>
+                Created website utilized by dozens of credit unions to
+                access corporate documentation using Firebase.
+              </li>
+              <li>
+                Managed user login credentials, permissions, and stored
+                documentation as JSONs in Firebase’s Database.
+              </li>
+              <li>
+                Designed frontend using Javascript, HTML, CSS, and PHP.
+              </li>
+            </ul>
+          </p>
+        </div>
+      </div>
+      <div class="img-container" onmouseenter="mouseOverB()" onmouseleave="mouseOutB()">
+        <img src="assets/img/portfolio/thumbnails/B.jpg" alt="Avatar" class="imageB" style="width:33.33%; float: left;">
+        <div id="imgDescriptionB" style="position:relative; display: none;">
+          <p>Software Project</p>
+          <h3>Amplitude Onset Detection</h3>
+          <p class="text-muted mb-0" >
+            <div>&nbsp;</div>
+            <ul style="text-align: left;">
+              <li>
+                Built an amplitude onset detector using Python that
+                imported audio files and scanned for unwanted amplitude
+                spikes in spectral graphs.
+              </li>
+              <li>
+                Eliminated exceeding audio spikes with an error percentage
+                of 0.02% compared to the python public librosa library
+                error percentage of 0.46% using a dataset of 175,000
+                frames across 100 audio files.
+              </li>
+            </ul>
+          </p>
+        </div>
+      </div>
+      <div class="img-container" onmouseenter="mouseOverC()" onmouseleave="mouseOutC()">
+        <img src="assets/img/portfolio/thumbnails/C.jpg" alt="Avatar" class="imageC" style="width:33.33%;">
+        <div id="imgDescriptionC" style="position:relative; display: none;">
+          <p>Software Project</p>
+          <h3>Green Posh Hackathon Website</h3>
+          <p class="text-muted mb-0" >
+            <div>&nbsp;</div>
+            <ul style="text-align: left;">
+              <li>
+                Co-developed a hackathon winning website that promoted
+                recycling by creating a virtual marketplace for users to
+                donate or trade used clothing.
+              </li>
+              <li>
+                Hosted website using WordPress and created frontend using
+                React framework.
+              </li>
+            </ul>
+          </p>
         </div>
       </div>
     </div>
@@ -283,6 +246,7 @@
           onclick="showGameDisplay()"
           class="btn btn-primary btn-xl"
           href="#services"
+          id="gameButton";
         >
           Demo
         </button>
@@ -584,10 +548,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <!-- * *                               SB Forms JS                               * *-->
-    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
   </body>
 </html>

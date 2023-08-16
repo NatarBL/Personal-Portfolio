@@ -56,10 +56,31 @@ window.addEventListener("DOMContentLoaded", (event) => {
 });
 
 function showGameDisplay() {
-  let display =
-    document.getElementById("gameDisplay").style.display === "block"
-      ? "none"
-      : "block";
+  document.getElementById("gameButton").style.display = "none";
+  document.getElementById("gameDisplay").style.display = "block";
+}
 
-  document.getElementById("gameDisplay").style.display = display;
+function mouseOverA() {
+  document.getElementById("imgDescriptionA").style =
+    "display: block; position:absolute; margin-top: 2.5%; width: 33.33%; text-align:center; padding: 10px; z-index:99;";
+}
+function mouseOutA() {
+  document.getElementById("imgDescriptionA").style = "display: none;";
+}
+function showDivA() {
+  document.getElementById("projectdivA").style.display = "block";
+}
+function mouseOverB() {
+  document.getElementById("imgDescriptionB").style =
+    "display: block; position:absolute; margin-left: 33.33%; margin-top: 2.5%; width: 33.33%; text-align:center; padding: 10px; z-index:99;";
+}
+function mouseOutB() {
+  document.getElementById("imgDescriptionB").style = "display: none;";
+}
+function mouseOverC() {
+  document.getElementById("imgDescriptionC").style =
+    "display: block; position:absolute; margin-left: 66.66%; margin-top: -20%; width: 33.33%; text-align:center; padding: 10px; z-index:99;";
+}
+function mouseOutC() {
+  document.getElementById("imgDescriptionC").style = "display: none;";
 }
