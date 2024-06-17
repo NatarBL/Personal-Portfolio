@@ -593,13 +593,13 @@ iframe {
 }
 
 .img-container:hover .imageA {
-  opacity: 0.6;
+  opacity: 0.4;
 }
 .img-container:hover .imageB {
-  opacity: 0.6;
+  opacity: 0.4;
 }
 .img-container:hover .imageC {
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 .img-container:hover .middle {

@@ -140,7 +140,7 @@
               </div>
               <h3 class="h4 mb-2">Languages</h3>
               <p class="text-muted mb-0">
-                JavaScript / HTML / CSS / Java / Python / C++ / Ocaml / PHP / Swift
+                JavaScript / HTML / CSS / Java / Python / C++ / Ocaml 
               </p>
             </div>
           </div>
@@ -168,321 +168,34 @@
     </section>
     <!-- Portfolio-->
     <div id="portfolio" >
+      <h2 class="text-center mt-0">Check out some projects I've worked on.</h2>
+      <hr class="divider" />
       <div class="img-container" onmouseenter="mouseOverA()" onmouseleave="mouseOutA()">
         <img src="assets/img/portfolio/thumbnails/A.jpg" alt="Avatar" class="imageA" style="width:33.33%; float: left;">
         <div id="imgDescriptionA" style="position:relative; display: none;">
-          <p>Software Project</p>
-          <h3>Corporate Documentation Website</h3>
-          <p class="text-muted mb-0" >
-            <div>&nbsp;</div>
-            <ul style="text-align: left;">
-              <li>
-                Created website utilized by dozens of credit unions to
-                access corporate documentation using Firebase.
-              </li>
-              <li>
-                Managed user login credentials, permissions, and stored
-                documentation as JSONs in Firebase’s Database.
-              </li>
-              <li>
-                Designed frontend using Javascript, HTML, CSS, and PHP.
-              </li>
-            </ul>
-          </p>
+          <h3>Web Game Demo</h3>
+          <button class="btn btn-primary btn-xl" style="margin-top: 12.5%;" onclick="toPokeLink()">Link</button>
         </div>
       </div>
       <div class="img-container" onmouseenter="mouseOverB()" onmouseleave="mouseOutB()">
         <img src="assets/img/portfolio/thumbnails/B.jpg" alt="Avatar" class="imageB" style="width:33.33%; float: left;">
         <div id="imgDescriptionB" style="position:relative; display: none;">
-          <p>Software Project</p>
-          <h3>Amplitude Onset Detection</h3>
-          <p class="text-muted mb-0" >
-            <div>&nbsp;</div>
-            <ul style="text-align: left;">
-              <li>
-                Built an amplitude onset detector using Python that
-                imported audio files and scanned for unwanted amplitude
-                spikes in spectral graphs.
-              </li>
-              <li>
-                Eliminated exceeding audio spikes with an error percentage
-                of 0.02% compared to the python public librosa library
-                error percentage of 0.46% using a dataset of 175,000
-                frames across 100 audio files.
-              </li>
-            </ul>
-          </p>
+          <h3>NFL Player Profile Website</h3>
+          <button class="btn btn-primary btn-xl" style="margin-top: 12.5%;">Link</button>
         </div>
       </div>
       <div class="img-container" onmouseenter="mouseOverC()" onmouseleave="mouseOutC()">
         <img src="assets/img/portfolio/thumbnails/C.jpg" alt="Avatar" class="imageC" style="width:33.33%;">
         <div id="imgDescriptionC" style="position:relative; display: none;">
-          <p>Software Project</p>
-          <h3>Fantasy Football Draft Simulator</h3>
-          <p class="text-muted mb-0" >
-            <div>&nbsp;</div>
-            <ul style="text-align: left;">
-              <li>
-                Built a website that pulls NFL player statistics and categorically displays the top-rated players available based on what the user values - i.e., consistency over average PPR. 
-              </li>
-              <li>
-                Player statistics are pulled from a public API and active draft status of players are pulled from sleeper’s API. The website is written in JavaScript, CSS, and uses ReactJS as a framework. Statistics are displayed using Chart.js.
-              </li>
-            </ul>
-          </p>
+          <h3>eDOC Documentation Website</h3>
+          <button class="btn btn-primary btn-xl" style="margin-top: 12.5%;">Link</button>
         </div>
       </div>
     </div>
     <!-- Game Demo -->
     <section class="page-section" id="services">
       <div class="container px-4 px-lg-5 text-center">
-        <h2 class="mb-4">Try a game demo I created.</h2>
-        <div>&nbsp;</div>
-        <button
-          onclick="showGameDisplay()"
-          class="btn btn-primary btn-xl"
-          href="#services"
-          id="gameButton";
-        >
-          Demo
-        </button>
-      </div>
-      <div class="text-center" id="gameDisplay" style="display: none">
-        <hr class="divider" />
-
-        <div>
-          <div style="display: inline-block; position: relative">
-            <div
-              id="overlappingDiv"
-              style="
-                background-color: black;
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                opacity: 0;
-                pointer-events: none;
-                z-index: 10;
-              "
-            ></div>
-            <!-- HTML battle elements -->
-            <div id="battleDisplay" style="display: none">
-              <!--Enemy healthbar-->
-              <div
-                style="
-                  background-color: white;
-                  width: 300px;
-                  position: absolute;
-                  top: 50px;
-                  left: 150px;
-                  border: 4px rgb(44, 44, 44) solid;
-                  padding: 8px;
-                "
-              >
-                <h1
-                  style="
-                    margin: 0;
-                    font-family: 'Arial';
-                    font-size: 22px;
-                    text-align: left;
-                  "
-                  id="enemyName"
-                ></h1>
-                <div style="position: relative">
-                  <div
-                    style="
-                      height: 6px;
-                      background-color: rgb(175, 175, 175);
-                      margin-top: 5px;
-                    "
-                  ></div>
-                  <div
-                    style="
-                      height: 6px;
-                      background-color: green;
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      right: 0;
-                      width: 100%;
-                    "
-                    id="enemyHealthBar"
-                  ></div>
-                  <div
-                    style="
-                      position: absolute;
-                      bottom: 8px;
-                      right: 0;
-                      font-family: 'Arial';
-                      font-size: 20px;
-                    "
-                    id="enemyLevel"
-                  >
-                    Lv. 5
-                  </div>
-                </div>
-              </div>
-              <!--Player healthbar-->
-              <div
-                style="
-                  background-color: white;
-                  width: 300px;
-                  position: absolute;
-                  top: 250px;
-                  left: 425px;
-                  border: 4px rgb(44, 44, 44) solid;
-                  padding: 8px;
-                "
-              >
-                <h1
-                  style="
-                    margin: 0;
-                    font-family: 'Arial';
-                    font-size: 22px;
-                    text-align: left;
-                  "
-                  id="playerName"
-                ></h1>
-                <div style="position: relative">
-                  <div
-                    style="
-                      height: 6px;
-                      background-color: rgb(175, 175, 175);
-                      margin-top: 5px;
-                    "
-                  ></div>
-                  <div
-                    style="
-                      height: 6px;
-                      background-color: green;
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      right: 0;
-                      width: 100%;
-                    "
-                    id="playerHealthBar"
-                  ></div>
-                  <div
-                    style="
-                      position: absolute;
-                      bottom: 8px;
-                      right: 0;
-                      font-family: 'Arial';
-                      font-size: 20px;
-                    "
-                    id="playerLevel"
-                  >
-                    Lv. 5
-                  </div>
-                </div>
-              </div>
-              <!--Battle dialog-->
-              <div
-                style="
-                  background-color: white;
-                  height: 200px;
-                  position: absolute;
-                  bottom: 0;
-                  left: 0;
-                  right: 0;
-                  border-top: 8px rgb(44, 44, 44) solid;
-                  display: flex;
-                "
-                id="battle-dialog"
-              >
-                <!-- Text Dialog-->
-                <div
-                  style="
-                    background-color: white;
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    font-family: 'Arial';
-                    font-size: 28px;
-                    padding: 16px;
-                    display: none;
-                    cursor: pointer;
-                    text-align: left;
-                  "
-                  id="dialogBox"
-                ></div>
-                <div
-                  style="
-                    background-color: white;
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    font-family: 'Arial';
-                    font-size: 28px;
-                    display: none;
-                    grid-template-columns: repeat(3, 1fr);
-                    cursor: pointer;
-                    text-align: left;
-                  "
-                  id="pokeSelect"
-                ></div>
-                <div
-                  id="attacksBox"
-                  style="
-                    width: 66.66%;
-                    display: grid;
-                    grid-template-columns: repeat(2, 1fr);
-                  "
-                ></div>
-                <div
-                  style="
-                    display: grid;
-                    grid-template-columns: repeat(1, 1fr);
-                    width: 33.33%;
-                    border-left: 8px rgb(44, 44, 44) solid;
-                  "
-                  id="runBox"
-                ></div>
-              </div>
-            </div>
-            <!--Overworld/Battle sequences-->
-            <canvas></canvas>
-            <script
-              src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
-              integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
-              crossorigin="anonymous"
-              referrerpolicy="no-referrer"
-            ></script>
-            <script src="poke/data/collisions.js"></script>
-            <script src="poke/data/battlezones.js"></script>
-            <script src="poke/data/attacks.js"></script>
-            <script src="poke/data/pokemon.js"></script>
-            <script src="poke/damageCalculator.js"></script>
-            <script src="poke/classes.js"></script>
-            <script src="poke/index.js"></script>
-            <script src="poke/battleScene.js"></script>
-          </div>
-        </div>
-        <hr class="divider" />
-        <div>
-          <p class="text-muted" style="display: inline-block; padding: 5px">
-            [W] <i class="fa fa-arrow-up"></i>
-          </p>
-          <p class="text-muted" style="display: inline-block; padding: 5px">
-            | &nbsp; [A] <i class="fa fa-arrow-left"></i>
-          </p>
-          <p class="text-muted" style="display: inline-block; padding: 5px">
-            | &nbsp; [S] <i class="fa fa-arrow-down"></i>
-          </p>
-          <p class="text-muted" style="display: inline-block">
-            | &nbsp; [D] <i class="fa fa-arrow-right"></i>
-          </p>
-          <p class="text-muted mb-5 text-center">
-            This demo is the recreation of one of my favorite games. It was made
-            using JavaScript, HTML, CSS, and the pixle map creater Tiled.
-          </p>
-        </div>
+        <h2 class="mb-4">Thank you for checking out my page!</h2>
       </div>
     </section>
     <footer class="bg-dark py-5">

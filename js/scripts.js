@@ -84,3 +84,7 @@ function mouseOverC() {
 function mouseOutC() {
   document.getElementById("imgDescriptionC").style = "display: none;";
 }
+
+function toPokeLink() {
+  location.replace("https://nateblandofficial-pokedemo.netlify.app/");
+}
